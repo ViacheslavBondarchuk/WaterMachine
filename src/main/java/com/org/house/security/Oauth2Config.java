@@ -12,8 +12,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import java.security.KeyPair;
-
 @Configuration
 public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     private String clientid = "watermachineid";
