@@ -74,10 +74,10 @@ public class TransactionService {
         automaticStateRepository.findByAutomaticId(automaticState.getAutomaticId()).
                 map(automaticState1 -> {
                             automaticState.setId(automaticState1.getId());
-                            automaticState.setAutomaticId(automaticState1.getAutomaticId());
-                            automaticState.setWater(automaticState1.getWater() + automaticState.getWater());
-                            automaticState.setMoney(automaticState1.getMoney() + automaticState.getWater());
-                            return automaticState;
+                    automaticState.setAutomaticId(automaticState1.getAutomaticId());
+                    automaticState.setWater(automaticState1.getWater() + automaticState.getWater());
+                    automaticState.setMoney(automaticState1.getMoney() + automaticState.getWater());
+                    return automaticState;
                         }
                 );
         automaticStateRepository.saveAndFlush(automaticState);

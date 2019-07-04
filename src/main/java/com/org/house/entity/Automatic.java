@@ -15,7 +15,6 @@ public class Automatic implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
     private String tradeMark;
     @ManyToOne
     @JoinColumn(name = "company_id")

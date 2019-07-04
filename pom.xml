@@ -72,6 +72,12 @@
             <artifactId>spring-security-jwt</artifactId>
             <version>1.0.10.RELEASE</version>
         </dependency>
+        <!--GeDa-->
+        <dependency>
+            <groupId>com.inspire-software.lib.dto.geda</groupId>
+            <artifactId>geda.core</artifactId>
+            <version>3.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>

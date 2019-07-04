@@ -12,19 +12,21 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import java.security.KeyPair;
+
 @Configuration
 public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     private String clientid = "watermachineid";
     private String clientSecret = "MySecret";
-    private String privateKey = "Private Key";
-    private String publiсKey = "Public Key";
+    private String privateKey = "key";
+    private String publiсKey = "key";
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Bean
-    public JwtAccessTokenConverter tokenConverter() {
+    public JwtAccessTokenConverter tokenEnhancer() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(privateKey);
         converter.setVerifierKey(publiсKey);
@@ -33,7 +35,7 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public JwtTokenStore tokenStore() throws Exception {
-        return new JwtTokenStore(tokenConverter());
+        return new JwtTokenStore(tokenEnhancer());
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
         endpoints
                 .authenticationManager(authenticationManager)
                 .tokenStore(tokenStore())
-                .accessTokenConverter(tokenConverter());
+                .accessTokenConverter(tokenEnhancer());
     }
 
     @Override
@@ -62,4 +64,5 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
                 .accessTokenValiditySeconds(20000)
                 .refreshTokenValiditySeconds(20000);
     }
+
 }
