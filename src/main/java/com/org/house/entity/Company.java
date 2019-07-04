@@ -3,10 +3,12 @@ package com.org.house.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -25,5 +27,7 @@ public class Company implements Serializable {
     private Set<Automatic> automatics;
     @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
     private User user;
+    @ElementCollection
+    private Collection<GrantedAuthority> grantedAuthoritiesList;
 
 }

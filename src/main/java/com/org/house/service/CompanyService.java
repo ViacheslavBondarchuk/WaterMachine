@@ -2,15 +2,19 @@ package com.org.house.service;
 
 import com.org.house.entity.Company;
 import com.org.house.repository.CompanyRepository;
+import com.org.house.security.CustomerCompany;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Log4j2
 @Service
-public class CompanyService {
+public class CompanyService implements UserDetailsService {
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -31,5 +35,18 @@ public class CompanyService {
 
         log.info("company; " + id + " was deleted");
         companyRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Company company = null;
+        try{
+            company = companyRepository.findByEmail(email);
+            CustomerCompany customerUser = new CustomerCompany(company);
+            return customerUser;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new UsernameNotFoundException("Email: " + email + " was not found in the database");
+        }
     }
 }
