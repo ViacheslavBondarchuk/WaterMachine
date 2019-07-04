@@ -27,7 +27,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public void deleteCompany(long id){
+    public void deleteCompany(int id){
 
         log.info("company; " + id + " was deleted");
         companyRepository.deleteById(id);

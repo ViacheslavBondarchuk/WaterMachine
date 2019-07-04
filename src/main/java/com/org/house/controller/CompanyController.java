@@ -24,7 +24,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/company/delete")
-    public void deleteCompany(@RequestParam(value = "id") long id){
+    public void deleteCompany(@RequestParam(value = "id") int id){
         companyService.deleteCompany(id);
     }
 }

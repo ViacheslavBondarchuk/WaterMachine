@@ -25,7 +25,7 @@ public class AutomaticService {
         return automaticRepository.findAll();
     }
 
-    public void deleteAutomatic(long id) {
+    public void deleteAutomatic(int id) {
         log.info("automatic " + id + " was deleted");
         automaticRepository.deleteById(id);
     }

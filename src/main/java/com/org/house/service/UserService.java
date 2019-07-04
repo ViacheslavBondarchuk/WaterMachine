@@ -28,7 +28,7 @@ public class UserService {
     }
 
 
-    public void deleteUser(long id) {
+    public void deleteUser(int id) {
 
         log.info("User: " + id + "was deleted");
         userRepository.deleteById(id);

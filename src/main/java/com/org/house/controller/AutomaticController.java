@@ -24,7 +24,7 @@ public class AutomaticController {
     }
 
     @DeleteMapping("/automatic/delete")
-    public void autmaticDelete(@RequestParam(value = "id") long id){
+    public void autmaticDelete(@RequestParam(value = "id") int id){
         automaticService.deleteAutomatic(id);
     }
 }
