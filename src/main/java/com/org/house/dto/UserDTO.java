@@ -1,26 +1,26 @@
 package com.org.house.dto;
 
 import com.org.house.entity.Company;
+import lombok.Data;
+import lombok.NonNull;
 
-public interface UserDTO {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
-    public int getId();
-
-    public void setId(int id);
-
-    public int getAge();
-
-    public void setAge(int age);
-
-    public String getFirstName();
-
-    public void setFirstName(String firstName);
-
-    public String getLastName();
-
-    public void setLastName(String lastName);
-
-    public Company getCompany();
-
-    public void setCompany(Company company);
+@Data
+public class UserDTO {
+    @Null
+    private int id;
+    @NonNull
+    @NotEmpty
+    private int age;
+    @NotEmpty
+    @NotEmpty
+    private String firstName;
+    @NotEmpty
+    @NotEmpty
+    private String lastName;
+    @NotNull
+    private Company company;
 }

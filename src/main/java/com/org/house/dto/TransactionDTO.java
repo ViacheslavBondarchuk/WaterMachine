@@ -1,33 +1,30 @@
 package com.org.house.dto;
 
+import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
-public interface TransactionDTO {
+@Data
+public class TransactionDTO {
+    @Null
+    private int id;
+    @NotNull
+    @NotEmpty
+    private int accountId;
+    @NotNull
+    @NotEmpty
+    private int automaticId;
+    private double cost;
+    @Null
+    private Date date;
+    @NotNull
+    @NotEmpty
+    private double quantityWater;
+    @NotNull
+    @NotEmpty
+    private boolean getMoney;
 
-    public int getId();
-    public void setId(int id);
-
-    public int getAccountId();
-
-    public void setAccountId(int accountId);
-
-    public int getAutomaticId();
-
-    public void setAutomaticId(int automaticId);
-
-    public double getCost();
-
-    public void setCost(double cost);
-
-    public Date getDate();
-
-    public void setDate(Date date);
-
-    public double getQuantityWater();
-
-    public void setQuantityWater(double quantityWater);
-
-    public boolean isGetMoney();
-
-    public void setGetMoney(boolean getMoney);
 }

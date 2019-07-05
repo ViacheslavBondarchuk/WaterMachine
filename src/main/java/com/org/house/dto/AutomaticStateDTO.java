@@ -1,20 +1,22 @@
 package com.org.house.dto;
 
-public interface AutomaticStateDTO {
+import lombok.Data;
 
-    public int getId();
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
-    public void setId(int id);
-
-    public double getMoney();
-
-    public void setMoney(double money);
-
-    public double getWater();
-
-    public void setWater(double water);
-
-    public int getAutomaticId();
-
-    public void setAutomaticId(int automaticId);
+@Data
+public class AutomaticStateDTO {
+    @Null
+    private int id;
+    @NotNull
+    @NotEmpty
+    private double money;
+    @NotNull
+    @NotEmpty
+    private double water;
+    @NotNull
+    @NotEmpty
+    private int automaticId;
 }

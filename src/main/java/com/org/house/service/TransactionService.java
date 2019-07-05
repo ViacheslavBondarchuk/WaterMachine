@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Log4j2
@@ -41,6 +42,7 @@ public class TransactionService {
                 .water(transaction.getQuantityWater())
                 .build();
 
+        transaction.setDate(new Date());
         recordTransactionMoney(automaticState);
         return transactionRepository.save(transaction);
 

@@ -1,18 +1,20 @@
 package com.org.house.dto;
 
 import com.org.house.entity.Company;
+import lombok.Data;
 
-public interface AutomaticDTO {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
-    public int getId();
+@Data
+public class AutomaticDTO {
+    @Null
+    private int id;
+    @NotNull
+    @NotEmpty
+    private String tradeMark;
+    @NotNull
+    private Company company;
 
-    public void setId(int id);
-
-    public String getTradeMark();
-
-    public void setTradeMark(String tradeMark);
-
-    public Company getCompany();
-
-    public void setCompany(Company company);
 }
