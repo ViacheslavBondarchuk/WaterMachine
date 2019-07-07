@@ -1,26 +1,29 @@
 package com.org.house.service;
 
-import com.org.house.entity.Automatic;
-import com.org.house.repository.AutomaticRepository;
+import com.org.house.entity.Automaton;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpStatusCodeException;
+import com.org.house.repository.AutomatonRepository;
 
 @Log4j2
 @Service
-public class AutomaticService {
+public class AutomatonService {
 
     @Autowired
-    private AutomaticRepository automaticRepository;
+    private AutomatonRepository automaticRepository;
 
-    public Automatic addAutomatic(Automatic automatic) {
+    public Automaton addAutomatic(Automaton automatic) {
         log.info("automatic was added");
         return automaticRepository.save(automatic);
     }
 
-    public List<Automatic> getAllAutomatic() {
+    public List<Automaton> getAllAutomatic() {
         log.info("automatic was gotten");
         return automaticRepository.findAll();
     }

@@ -1,6 +1,6 @@
 package com.org.house.controller;
 
-import com.org.house.entity.AutomaticState;
+import com.org.house.entity.AutomatonState;
 import com.org.house.entity.Transaction;
 import com.org.house.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,39 +15,29 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("/water-paid/get")
-    public Transaction getWaterPaid(@RequestBody Transaction transaction) {
+    @GetMapping("/waters")
+    public Transaction getWater(@RequestBody Transaction transaction) {
         return transactionService.waterAddOrGet(transaction);
     }
 
-    @GetMapping("/water-free/get")
-    public Transaction getWaterFree(@RequestBody Transaction transaction) {
+    @PostMapping("/waters")
+    public Transaction addWater(@RequestBody Transaction transaction) {
         return transactionService.waterAddOrGet(transaction);
     }
 
-    @PostMapping("/water-paid/add")
-    public Transaction addWaterPaid(@RequestBody Transaction transaction) {
-        return transactionService.waterAddOrGet(transaction);
-    }
-
-    @PostMapping("/water-free/add")
-    public Transaction addWaterFree(@RequestBody Transaction transaction) {
-        return transactionService.waterAddOrGet(transaction);
-    }
-
-    @GetMapping("/money/get")
+    @GetMapping("/moneys")
     public Transaction getAllMoney(@RequestBody Transaction transaction) {
         return transactionService.getAllMoney(transaction);
     }
 
-    @GetMapping("/report/general")
-    public List<AutomaticState> getGeneralReport() {
-        return transactionService.getGeneralReport();
+    @GetMapping("/reports/automatons")
+    public List<AutomatonState> getReportAutomatons() {
+        return transactionService.getReportAutomatons();
     }
 
-    @GetMapping("/report")
+    @GetMapping("/reports/transactions")
     public List<Transaction> getReportTransaction(@RequestParam String dateFrom,
-                                                  @RequestParam String dateBefore) throws ParseException {
+            @RequestParam String dateBefore) throws ParseException {
         return transactionService.getReportTransaction(dateFrom, dateBefore);
     }
 

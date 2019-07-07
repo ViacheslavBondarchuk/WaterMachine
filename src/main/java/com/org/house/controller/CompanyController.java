@@ -13,18 +13,18 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @PostMapping("/company/add")
+    @PostMapping("/companies")
     public Company addCompany(@RequestBody Company company){
         return companyService.addCompany(company);
     }
 
-    @GetMapping("/company/all")
+    @GetMapping("/companies")
     public List<Company> getAllCompany(){
         return companyService.getAllCompany();
     }
 
-    @DeleteMapping("/company/delete")
-    public void deleteCompany(@RequestParam(value = "id") int id){
+    @DeleteMapping("/companies/{id}")
+    public void deleteCompany(@PathVariable int id){
         companyService.deleteCompany(id);
     }
 }

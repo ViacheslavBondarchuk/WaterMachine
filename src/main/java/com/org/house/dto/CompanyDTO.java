@@ -1,6 +1,6 @@
 package com.org.house.dto;
 
-import com.org.house.entity.Automatic;
+import com.org.house.entity.Automaton;
 import com.org.house.entity.User;
 import lombok.Data;
 
@@ -23,7 +23,7 @@ public class CompanyDTO {
     @NotEmpty
     private String password;
     @NotNull
-    private Set<Automatic> automatics;
+    private Set<Automaton> automatics;
     @NotNull
     private User user;
 

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Data
-public class AutomaticStateDTO {
+public class AutomatonStateDTO {
     @Null
     private int id;
     @NotNull

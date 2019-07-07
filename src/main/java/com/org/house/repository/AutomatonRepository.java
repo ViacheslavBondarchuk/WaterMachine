@@ -1,9 +1,9 @@
 package com.org.house.repository;
 
-import com.org.house.entity.Automatic;
+import com.org.house.entity.Automaton;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AutomaticRepository extends JpaRepository<Automatic, Integer> {
+public interface AutomatonRepository extends JpaRepository<Automaton, Integer> {
 }

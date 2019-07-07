@@ -17,14 +17,14 @@ import java.util.Set;
 @NoArgsConstructor
 public class Company implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     @Email
     private String email;
     private String password;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-    private Set<Automatic> automatics;
+    private Set<Automaton> automatics;
     @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
     private User user;
     @ElementCollection
