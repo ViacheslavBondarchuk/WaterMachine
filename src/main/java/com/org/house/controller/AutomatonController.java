@@ -14,8 +14,8 @@ public class AutomatonController {
     private AutomatonService automatonService;
 
     @PostMapping("/automatons")
-    public Automaton addAutomatic(@RequestBody Automaton automatic){
-        return automatonService.addAutomatic(automatic);
+    public Automaton addAutomaton(@RequestBody Automaton automaton){
+        return automatonService.addAutomatic(automaton);
     }
 
     @GetMapping("/automatons")
