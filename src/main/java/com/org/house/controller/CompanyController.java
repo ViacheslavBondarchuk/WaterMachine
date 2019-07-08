@@ -14,17 +14,22 @@ public class CompanyController {
     private CompanyService companyService;
 
     @PostMapping("/companies")
-    public Company addCompany(@RequestBody Company company){
+    public Company addCompany(@RequestBody Company company) {
         return companyService.addCompany(company);
     }
 
     @GetMapping("/companies")
-    public List<Company> getAllCompany(){
+    public List<Company> getAllCompany() {
         return companyService.getAllCompany();
     }
 
+    @PutMapping("/companies")
+    public Company updateCompany(@RequestBody Company company) {
+        return companyService.updateCompany(company);
+    }
+
     @DeleteMapping("/companies/{id}")
-    public void deleteCompany(@PathVariable int id){
+    public void deleteCompany(@PathVariable int id) {
         companyService.deleteCompany(id);
     }
 }

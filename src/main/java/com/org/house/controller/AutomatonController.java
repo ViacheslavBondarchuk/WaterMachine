@@ -14,17 +14,22 @@ public class AutomatonController {
     private AutomatonService automatonService;
 
     @PostMapping("/automatons")
-    public Automaton addAutomaton(@RequestBody Automaton automaton){
+    public Automaton addAutomaton(@RequestBody Automaton automaton) {
         return automatonService.addAutomatic(automaton);
     }
 
     @GetMapping("/automatons")
-    public List<Automaton> getAllAutomaton(){
+    public List<Automaton> getAllAutomaton() {
         return automatonService.getAllAutomatic();
     }
 
+    @PutMapping("/automatons")
+    public Automaton updateAutomaton(@RequestBody Automaton automaton) {
+        return automatonService.updateAutomaton(automaton);
+    }
+
     @DeleteMapping("/automatons/{id}")
-    public void autmaticDelete(@PathVariable int id){
+    public void autmaticDelete(@PathVariable int id) {
         automatonService.deleteAutomatic(id);
     }
 }

@@ -37,6 +37,14 @@ public class CompanyService implements UserDetailsService {
         companyRepository.deleteById(id);
     }
 
+    public Company updateCompany(Company company){
+        log.info("Company: " + company.getId() + " was updated");
+         companyRepository.findById(company.getId()).ifPresent(company1 -> company.setId(company1.getId()));
+
+         return companyRepository.saveAndFlush(company);
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Company company = null;

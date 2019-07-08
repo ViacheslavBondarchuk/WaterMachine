@@ -25,6 +25,11 @@ public class AutomatonService {
         return automatonRepository.findAll();
     }
 
+    public Automaton updateAutomaton(Automaton automaton){
+        automatonRepository.findById(automaton.getId()).ifPresent(automaton1 -> automaton.setId(automaton1.getId()));
+        return automatonRepository.saveAndFlush(automaton);
+    }
+
     public void deleteAutomatic(int id) {
         log.info("automatic " + id + " was deleted");
         automatonRepository.deleteById(id);

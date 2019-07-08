@@ -2,6 +2,7 @@ package com.org.house.service;
 
 import com.org.house.entity.AutomatonState;
 import com.org.house.entity.Transaction;
+import com.org.house.repository.AutomatonStateRepository;
 import com.org.house.repository.TransactionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import com.org.house.repository.AutomatonStateRepository;
 
 @Log4j2
 @Service
@@ -32,7 +32,7 @@ public class TransactionService {
                 .build();
 
         transaction.setDate(new Date());
-        recordAutomaticState(automatonState);
+        recordAutomatonState(automatonState);
         return transactionRepository.save(transaction);
     }
 
@@ -63,24 +63,24 @@ public class TransactionService {
     private void recordTransactionMoney(AutomatonState automaticState) {
         automaticStateRepository.findByAutomatonId(automaticState.getAutomatonId()).
                 map(automaticState1 -> {
-                    automaticState.setId(automaticState1.getId());
-                    automaticState.setAutomatonId(automaticState1.getAutomatonId());
-                    automaticState.setMoney(0);
-                    return automaticState;
-                }
+                            automaticState.setId(automaticState1.getId());
+                            automaticState.setAutomatonId(automaticState1.getAutomatonId());
+                            automaticState.setMoney(0);
+                            return automaticState;
+                        }
                 );
         automaticStateRepository.saveAndFlush(automaticState);
     }
 
-    private void recordAutomaticState(AutomatonState automaticState) {
+    private void recordAutomatonState(AutomatonState automaticState) {
         automaticStateRepository.findByAutomatonId(automaticState.getAutomatonId()).
                 map(automaticState1 -> {
-                    automaticState.setId(automaticState1.getId());
-                    automaticState.setAutomatonId(automaticState1.getAutomatonId());
-                    automaticState.setWater(automaticState1.getWater() + automaticState.getWater());
-                    automaticState.setMoney(automaticState1.getMoney() + automaticState.getWater());
-                    return automaticState;
-                }
+                            automaticState.setId(automaticState1.getId());
+                            automaticState.setAutomatonId(automaticState1.getAutomatonId());
+                            automaticState.setWater(automaticState1.getWater() + automaticState.getWater());
+                            automaticState.setMoney(automaticState1.getMoney() + automaticState.getWater());
+                            return automaticState;
+                        }
                 );
         automaticStateRepository.saveAndFlush(automaticState);
     }

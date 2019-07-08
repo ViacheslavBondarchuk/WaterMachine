@@ -16,20 +16,22 @@ public class UserService {
     private UserRepository userRepository;
 
     public User addUser(User user) {
-
         log.info("User was created");
         return userRepository.save(user);
     }
 
     public List<User> getAllUser() {
-
         log.info("Users was gotten");
         return userRepository.findAll();
     }
 
+    public User updateUser(User user){
+        userRepository.findById(user.getId()).ifPresent(user1 -> user.setId(user1.getId()));
+        return userRepository.saveAndFlush(user);
+    }
+
 
     public void deleteUser(int id) {
-
         log.info("User: " + id + "was deleted");
         userRepository.deleteById(id);
 
