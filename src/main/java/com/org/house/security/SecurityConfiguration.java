@@ -39,11 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure( final HttpSecurity http) throws Exception {
         http
-                .antMatcher("/user/**")
-                .antMatcher("/company/**")
-                .antMatcher("/automatic/**")
-                .antMatcher("/report/**")
-                .antMatcher("/money/get")
+                .antMatcher("/users/**")
+                .antMatcher("/companies/**")
+                .antMatcher("/automatons/**")
+                .antMatcher("/reports/**")
+                .antMatcher("/moneys")
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
