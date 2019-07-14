@@ -1,40 +1,37 @@
 package com.org.house.service;
 
-import com.org.house.model.User;
-import com.org.house.repository.UserRepository;
-import lombok.extern.log4j.Log4j2;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.org.house.dto.UserDTO;
+import com.org.house.model.User;
+import com.org.house.repository.UserRepository;
 
-@Log4j2
 @Service
 public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
 
-	public User addUser(User user) {
-		log.info("User was created");
-		return userRepository.save(user);
+	public User addUser(UserDTO userDTO) {
+		return userRepository.save(new ModelMapper().map(userDTO, User.class));
 	}
 	
 	public List<User> getAllUser() {
-		log.info("Users was gotten");
 		return userRepository.findAll();
 	}
 
-	public User updateUser(User user) {
-		userRepository.findById(user.getId()).ifPresent(user1 -> user.setId(user1.getId()));
-		return userRepository.saveAndFlush(user);
+	public User updateUser(UserDTO userDTO) {
+		return userRepository.saveAndFlush(new ModelMapper().map(userDTO, User.class));
 	}
 
 	public void deleteUser(long id) {
-		log.info("User: " + id + "was deleted");
 		userRepository.deleteById(id);
 
 	}
