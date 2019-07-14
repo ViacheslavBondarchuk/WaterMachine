@@ -1,6 +1,6 @@
 package com.org.house.controller;
 
-import com.org.house.entity.Automaton;
+import com.org.house.model.Automaton;
 import com.org.house.service.AutomatonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.org.house.service;
 
-import com.org.house.entity.Automaton;
+import com.org.house.model.Automaton;
 import com.org.house.repository.AutomatonRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AutomatonService {
         return automatonRepository.saveAndFlush(automaton);
     }
 
-    public void deleteAutomatic(int id) {
+    public void deleteAutomatic(long id) {
         log.info("automatic " + id + " was deleted");
         automatonRepository.deleteById(id);
     }

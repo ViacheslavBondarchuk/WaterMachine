@@ -1,4 +1,4 @@
-package com.org.house.security;
+package com.org.house.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

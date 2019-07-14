@@ -1,6 +1,5 @@
-package com.org.house.security;
+package com.org.house.config;
 
-import com.org.house.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,33 +16,36 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.org.house.service.UserService;
+
 @Configuration
 @EnableWebSecurity
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    CompanyService companyService;
+	@Autowired
+	private UserService userService;
 
-    @Bean
-    public PasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	
+	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(companyService).passwordEncoder(encoder());
-    }
 
-    @Override
+
+
+	@Override
     protected void configure( final HttpSecurity http) throws Exception {
         http
-                .antMatcher("/users/**")
-                .antMatcher("/companies/**")
-                .antMatcher("/automatons/**")
-                .antMatcher("/reports/**")
-                .antMatcher("/moneys")
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
@@ -52,16 +54,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring();
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring();
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth
+			.userDetailsService(userService)
+			.passwordEncoder(passwordEncoder());
+			
+	}
 
 }

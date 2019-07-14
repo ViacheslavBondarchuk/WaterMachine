@@ -1,6 +1,6 @@
 package com.org.house.controller;
 
-import com.org.house.entity.User;
+import com.org.house.model.User;
 import com.org.house.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

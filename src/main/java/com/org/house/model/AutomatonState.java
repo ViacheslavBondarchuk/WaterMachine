@@ -1,4 +1,4 @@
-package com.org.house.entity;
+package com.org.house.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,18 +11,18 @@ import lombok.Builder;
 
 @Data
 @Entity
-@Builder(access = AccessLevel.PUBLIC)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutomatonState implements Serializable {
+public class AutomatonState {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "quantity_money")
     private double money;
     @Column(name = "quantity_water")
     private double water;
     @Column(name = "automaton_id")
-    private int automatonId;
+    private long automatonId;
 
 }

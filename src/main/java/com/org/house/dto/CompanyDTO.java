@@ -1,12 +1,14 @@
 package com.org.house.dto;
 
-import com.org.house.entity.Automaton;
-import com.org.house.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+
+import com.org.house.model.Automaton;
+import com.org.house.model.User;
+
 import java.util.Set;
 
 @Data

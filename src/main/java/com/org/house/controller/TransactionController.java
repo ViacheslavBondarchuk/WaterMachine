@@ -1,7 +1,7 @@
 package com.org.house.controller;
 
-import com.org.house.entity.AutomatonState;
-import com.org.house.entity.Transaction;
+import com.org.house.model.AutomatonState;
+import com.org.house.model.Transaction;
 import com.org.house.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,17 @@ public class TransactionController {
 
     @GetMapping("/waters")
     public Transaction getWater(@RequestBody Transaction transaction) {
-        return transactionService.waterAddOrGet(transaction);
+        return transactionService.operationsWithWater(transaction);
     }
 
     @PostMapping("/waters")
     public Transaction addWater(@RequestBody Transaction transaction) {
-        return transactionService.waterAddOrGet(transaction);
+        return transactionService.operationsWithWater(transaction);
     }
 
     @GetMapping("/moneys")
     public Transaction getAllMoney(@RequestBody Transaction transaction) {
-        return transactionService.getAllMoney(transaction);
+        return transactionService.moneyToZero(transaction);
     }
 
     @GetMapping("/reports/automatons")

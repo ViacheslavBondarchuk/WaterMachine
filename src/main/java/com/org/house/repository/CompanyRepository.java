@@ -1,10 +1,10 @@
 package com.org.house.repository;
 
-import com.org.house.entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.org.house.model.Company;
+
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Integer> {
-    Company findByEmail(String email);
+public interface CompanyRepository extends JpaRepository<Company, Long> {
 }

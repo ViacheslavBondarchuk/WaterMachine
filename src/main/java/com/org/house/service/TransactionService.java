@@ -1,7 +1,7 @@
 package com.org.house.service;
 
-import com.org.house.entity.AutomatonState;
-import com.org.house.entity.Transaction;
+import com.org.house.model.AutomatonState;
+import com.org.house.model.Transaction;
 import com.org.house.repository.AutomatonStateRepository;
 import com.org.house.repository.TransactionRepository;
 import lombok.extern.log4j.Log4j2;
@@ -24,8 +24,8 @@ public class TransactionService {
     private AutomatonStateRepository automaticStateRepository;
 
     @Transactional
-    public Transaction waterAddOrGet(Transaction transaction) {
-        AutomatonState automatonState = new AutomatonState().builder()
+    public Transaction operationsWithWater(Transaction transaction) {
+        AutomatonState automatonState = AutomatonState.builder()
                 .automatonId(transaction.getAutomaticId())
                 .money(transaction.getCost())
                 .water(transaction.getQuantityWater())
@@ -37,8 +37,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction getAllMoney(Transaction transaction) {
-        AutomatonState automatonState = new AutomatonState().builder()
+    public Transaction moneyToZero(Transaction transaction) {
+        AutomatonState automatonState = AutomatonState.builder()
                 .automatonId(transaction.getAutomaticId())
                 .money(transaction.getCost())
                 .water(transaction.getQuantityWater())

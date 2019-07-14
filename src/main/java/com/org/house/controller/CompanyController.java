@@ -1,6 +1,6 @@
 package com.org.house.controller;
 
-import com.org.house.entity.Company;
+import com.org.house.model.Company;
 import com.org.house.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
