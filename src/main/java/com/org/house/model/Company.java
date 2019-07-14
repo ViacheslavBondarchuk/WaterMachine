@@ -23,7 +23,8 @@ public class Company {
 	private long id;
 	private String name;
 
-	@OneToMany(mappedBy = "company")
+	@OneToMany
+	@JoinColumn(name = "company_id")
 	private Set<User> users;
 
 	@OneToMany

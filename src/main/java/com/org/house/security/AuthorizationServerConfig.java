@@ -1,5 +1,6 @@
-package com.org.house.config;
+package com.org.house.security;
 
+import com.org.house.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -9,22 +10,30 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import javax.sql.DataSource;
+
 @Configuration
-public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private String clientid = "watermachineid";
     private String clientSecret = "MySecret";
     private String privateKey = "key";
     private String publiсKey = "key";
 
     @Autowired
+    private DataSource dataSource;
+
+    private UserService userService;
+
+    @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Bean
-    public JwtAccessTokenConverter tokenEnhancer() {
+    public JwtAccessTokenConverter tokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(privateKey);
         converter.setVerifierKey(publiсKey);
@@ -33,15 +42,15 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public JwtTokenStore tokenStore() throws Exception {
-        return new JwtTokenStore(tokenEnhancer());
+        return new JwtTokenStore(tokenConverter());
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .authenticationManager(authenticationManager)
                 .tokenStore(tokenStore())
-                .accessTokenConverter(tokenEnhancer());
+                .accessTokenConverter(tokenConverter())
+                .authenticationManager(authenticationManager);
     }
 
     @Override
@@ -54,7 +63,7 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .inMemory()
+               .withClientDetails((ClientDetailsService) userService)
                 .withClient(clientid)
                 .secret(clientSecret)
                 .scopes("read", "write")

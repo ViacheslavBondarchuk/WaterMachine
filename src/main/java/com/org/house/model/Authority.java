@@ -2,11 +2,7 @@ package com.org.house.model;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 @Entity
@@ -17,7 +13,7 @@ public enum Authority implements GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToMany(mappedBy = "authorities")
+	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
 	private Set<User> user;
 
 	@Override

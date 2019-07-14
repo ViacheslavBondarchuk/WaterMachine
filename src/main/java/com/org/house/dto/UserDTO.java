@@ -1,19 +1,16 @@
 package com.org.house.dto;
 
-import java.util.Set;
+import com.org.house.model.Authority;
+import com.org.house.transfer.New;
+import com.org.house.transfer.Update;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-
-import com.org.house.model.Authority;
-import com.org.house.model.Company;
-import com.org.house.transfer.New;
-import com.org.house.transfer.Update;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +22,8 @@ public class UserDTO {
 	private String email;
 	@NotBlank(groups = { New.class, Update.class })
 	private String password;
+	@NotBlank(groups = {New.class, Update.class})
+	private int company_id;
 	@NotBlank(groups = { New.class, Update.class })
 	private String username;
 
@@ -40,9 +39,6 @@ public class UserDTO {
 	@Null(groups = { New.class })
 	@NotNull(groups = { Update.class })
 	private boolean isCredentialsNonExpired;
-
-	@Valid
-	private Company company;
 
 	@Valid
 	private Set<Authority> authorities;

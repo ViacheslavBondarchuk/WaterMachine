@@ -33,6 +33,7 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String email;
+	private int company_id;
 	private String password;
 	private String username;
 	private boolean isEnabled;
@@ -40,15 +41,11 @@ public class User implements UserDetails {
 	private boolean isAccountNonExpired;
 	private boolean isCredentialsNonExpired;
 
-	@ManyToOne
-	@JoinColumn(name = "company_id")
-	private Company company;
-
 	@Enumerated(EnumType.STRING)
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "authority_relations ",
-	joinColumns = { @JoinColumn(name = "user_id") },
-	inverseJoinColumns = {@JoinColumn(name = "authority_id") })
+	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
+	inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id") })
 	private Set<Authority> authorities;
 
 }
