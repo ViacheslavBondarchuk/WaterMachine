@@ -1,21 +1,23 @@
 package com.org.house.dto;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-import com.org.house.model.Company;
+import org.hibernate.sql.Update;
 
-@Data
+import com.org.house.transfer.New;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AutomatonDTO {
-	@Null
+	@Null(groups = { New.class })
+	@NotNull(groups = { Update.class })
 	private int id;
-	@NotBlank
+	@NotBlank(groups = { New.class, Update.class })
 	private String tradeMark;
-	@NotNull
-	private Company company;
 
 }

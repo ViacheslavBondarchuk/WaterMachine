@@ -2,9 +2,11 @@ package com.org.house.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.org.house.dto.CompanyDTO;
 import com.org.house.model.Company;
 import com.org.house.repository.CompanyRepository;
 
@@ -17,29 +19,20 @@ public class CompanyService {
 	@Autowired
 	private CompanyRepository companyRepository;
 
-	public Company addCompany(Company company) {
-
-		log.info("company was added");
-		return companyRepository.save(company);
+	public Company addCompany(CompanyDTO companyDTO) {
+		return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
 	}
 
 	public List<Company> getAllCompany() {
-
-		log.info("company was gotten");
 		return companyRepository.findAll();
 	}
 
 	public void deleteCompany(long id) {
-
-		log.info("company; " + id + " was deleted");
 		companyRepository.deleteById(id);
 	}
 
-	public Company updateCompany(Company company) {
-		log.info("Company: " + company.getId() + " was updated");
-		companyRepository.findById(company.getId()).ifPresent(company1 -> company.setId(company1.getId()));
-
-		return companyRepository.saveAndFlush(company);
+	public Company updateCompany(CompanyDTO companyDTO) {
+		return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
 	}
 
 }

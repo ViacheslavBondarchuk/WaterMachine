@@ -21,9 +21,6 @@ public class Automaton {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String tradeMark;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "company_id")
-	private Company company;
+
 
 }

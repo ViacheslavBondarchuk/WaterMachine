@@ -1,32 +1,34 @@
 package com.org.house.dto;
 
-import lombok.Data;
+import java.util.Set;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 import com.org.house.model.Automaton;
 import com.org.house.model.User;
+import com.org.house.transfer.New;
+import com.org.house.transfer.Update;
 
-import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CompanyDTO {
-    @Null
-    private int id;
-    @NotNull
-    @NotEmpty
-    private String name;
-    @NotNull
-    @NotEmpty
-    private String email;
-    @NotNull
-    @NotEmpty
-    private String password;
-    @NotNull
-    private Set<Automaton> automatics;
-    @NotNull
-    private User user;
+
+	@Null(groups = { New.class })
+	@NotNull(groups = { Update.class })
+	private long id;
+
+	@NotBlank(groups = { New.class, Update.class })
+	private String name;
+
+	@Valid
+	private Set<User> users;
+	@Valid
+	private Set<Automaton> automatics;
 
 }

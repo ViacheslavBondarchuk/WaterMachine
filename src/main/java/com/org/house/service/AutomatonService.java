@@ -1,37 +1,41 @@
 package com.org.house.service;
 
-import com.org.house.model.Automaton;
-import com.org.house.repository.AutomatonRepository;
-import lombok.extern.log4j.Log4j2;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.org.house.dto.AutomatonDTO;
+import com.org.house.model.Automaton;
+import com.org.house.repository.AutomatonRepository;
 
-@Log4j2
+import javassist.NotFoundException;
+
 @Service
 public class AutomatonService {
 
-    @Autowired
-    private AutomatonRepository automatonRepository;
+	@Autowired
+	private AutomatonRepository automatonRepository;
 
-    public Automaton addAutomatic(Automaton automatic) {
-        log.info("automatic was added");
-        return automatonRepository.save(automatic);
-    }
+	public Automaton addAutomatic(AutomatonDTO automatonDTO) {
+		return automatonRepository.save(new ModelMapper().map(automatonDTO, Automaton.class));
+	}
 
-    public List<Automaton> getAllAutomatic() {
-        log.info("automatic was gotten");
-        return automatonRepository.findAll();
-    }
+	public List<Automaton> getAllAutomatic() {
+		return automatonRepository.findAll();
+	}
 
-    public Automaton updateAutomaton(Automaton automaton){
-        automatonRepository.findById(automaton.getId()).ifPresent(automaton1 -> automaton.setId(automaton1.getId()));
-        return automatonRepository.saveAndFlush(automaton);
-    }
+	public Automaton updateAutomaton(AutomatonDTO automatonDTO) {
+		return automatonRepository.save(new ModelMapper().map(automatonDTO, Automaton.class));
+	}
 
-    public void deleteAutomatic(long id) {
-        log.info("automatic " + id + " was deleted");
-        automatonRepository.deleteById(id);
-    }
+	public Automaton getOneAutomaton(long id) throws NotFoundException {
+		return automatonRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Automaton has been not found "));
+	}
+
+	public void deleteAutomaton(long id) {
+		automatonRepository.deleteById(id);
+	}
 }

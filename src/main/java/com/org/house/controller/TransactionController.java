@@ -1,31 +1,41 @@
 package com.org.house.controller;
 
-import com.org.house.model.AutomatonState;
-import com.org.house.model.Transaction;
-import com.org.house.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.org.house.dto.TransactionDTO;
+import com.org.house.model.AutomatonState;
+import com.org.house.model.Transaction;
+import com.org.house.service.TransactionService;
+import com.org.house.transfer.New;
+
 @RestController
+@RequestMapping("/water")
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("/waters")
-    public Transaction getWater(@RequestBody Transaction transaction) {
-        return transactionService.operationsWithWater(transaction);
+    @GetMapping
+    public Transaction getWater(@Validated(New.class) @RequestBody TransactionDTO transactionDTO) {
+        return transactionService.getWater(transactionDTO);
     }
 
-    @PostMapping("/waters")
-    public Transaction addWater(@RequestBody Transaction transaction) {
-        return transactionService.operationsWithWater(transaction);
+    @PostMapping
+    public Transaction addWater(@Validated(New.class) @RequestBody TransactionDTO transactionDTO) {
+        return transactionService.addWater(transactionDTO);
     }
 
-    @GetMapping("/moneys")
+    @GetMapping("/money")
     public Transaction getAllMoney(@RequestBody Transaction transaction) {
         return transactionService.moneyToZero(transaction);
     }
