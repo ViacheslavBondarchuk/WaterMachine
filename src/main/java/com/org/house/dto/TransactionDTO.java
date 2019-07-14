@@ -17,7 +17,6 @@ import lombok.Setter;
 public class TransactionDTO {
 
 	@Null(groups = { New.class })
-	@NotNull(groups = { Update.class })
 	private long id;
 	@NotBlank(groups = { New.class, Update.class })
 	private int accountId;
