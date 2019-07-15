@@ -2,6 +2,7 @@ package com.org.house.service;
 
 import java.util.List;
 
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +17,27 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class CompanyService {
 
-	@Autowired
-	private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
-	public Company addCompany(CompanyDTO companyDTO) {
-		return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
-	}
+    public Company addCompany(CompanyDTO companyDTO) {
+        return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
+    }
 
-	public List<Company> getAllCompany() {
-		return companyRepository.findAll();
-	}
+    public List<Company> getAllCompany() {
+        return companyRepository.findAll();
+    }
 
-	public void deleteCompany(long id) {
-		companyRepository.deleteById(id);
-	}
+    public Company getOneCompany(long id) throws NotFoundException {
+        return companyRepository.findById(id).orElseThrow(() -> new NotFoundException("Company by " + id + "was not found"));
+    }
 
-	public Company updateCompany(CompanyDTO companyDTO) {
-		return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
-	}
+    public void deleteCompany(long id) {
+        companyRepository.deleteById(id);
+    }
+
+    public Company updateCompany(CompanyDTO companyDTO) {
+        return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
+    }
 
 }

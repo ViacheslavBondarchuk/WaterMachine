@@ -2,6 +2,7 @@ package com.org.house.controller;
 
 import java.util.List;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +28,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public User addUser(@Validated(New.class)@RequestBody UserDTO userDTO) {
+    public User addUser(@Validated(New.class) @RequestBody UserDTO userDTO) {
         return userService.addUser(userDTO);
     }
 
@@ -39,6 +40,11 @@ public class UserController {
     @PutMapping
     public User updateUser(@Validated(Update.class) @RequestBody UserDTO userDTO) {
         return userService.updateUser(userDTO);
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable long id) throws NotFoundException {
+        return userService.getUserById(id);
     }
 
     @DeleteMapping("/{id}")

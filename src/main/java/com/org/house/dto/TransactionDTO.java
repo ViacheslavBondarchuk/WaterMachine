@@ -1,16 +1,13 @@
 package com.org.house.dto;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
 import com.org.house.transfer.New;
 import com.org.house.transfer.Update;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import java.util.Date;
 
 @Getter
 @Setter

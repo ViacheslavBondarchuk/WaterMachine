@@ -2,6 +2,7 @@ package com.org.house.controller;
 
 import java.util.List;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,26 +24,31 @@ import com.org.house.transfer.Update;
 @RequestMapping("/companies")
 public class CompanyController {
 
-	@Autowired
-	private CompanyService companyService;
+    @Autowired
+    private CompanyService companyService;
 
-	@PostMapping
-	public Company addCompany(@Validated(New.class) @RequestBody CompanyDTO companyDTO) {
-		return companyService.addCompany(companyDTO);
-	}
+    @PostMapping
+    public Company addCompany(@Validated(New.class) @RequestBody CompanyDTO companyDTO) {
+        return companyService.addCompany(companyDTO);
+    }
 
-	@GetMapping
-	public List<Company> getAllCompany() {
-		return companyService.getAllCompany();
-	}
+    @GetMapping
+    public List<Company> getAllCompany() {
+        return companyService.getAllCompany();
+    }
 
-	@PutMapping
-	public Company updateCompany(@Validated(Update.class) @RequestBody CompanyDTO companyDTO) {
-		return companyService.updateCompany(companyDTO);
-	}
+    @GetMapping("/{id}")
+    public Company getOneCompany(@PathVariable long id) throws NotFoundException {
+        return companyService.getOneCompany(id);
+    }
 
-	@DeleteMapping("/{id}")
-	public void deleteCompany(@PathVariable int id) {
-		companyService.deleteCompany(id);
-	}
+    @PutMapping
+    public Company updateCompany(@Validated(Update.class) @RequestBody CompanyDTO companyDTO) {
+        return companyService.updateCompany(companyDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCompany(@PathVariable int id) {
+        companyService.deleteCompany(id);
+    }
 }
