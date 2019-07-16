@@ -69,32 +69,29 @@ public class TransactionService {
     }
 
     public AutomatonState getReportByAutomaton(long id) throws NotFoundException {
-        return automatonStateRepository.findByAutomatonId(id).orElseThrow(() -> new NotFoundException("Automaton by " + id + "was not found"));
+        return automatonStateRepository.findByAutomatonId(id).orElseThrow(() -> new NotFoundException("Automaton " + id + " was not found"));
     }
 
-    public List<Transaction> getReportTransaction(String dateFrom, String dateBefore) throws ParseException {
-        return transactionRepository.findByDateBetween(new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom),
-                new SimpleDateFormat("yyyy-MM-dd").parse(dateBefore));
+    public List<Transaction> getReportByTransactionBetweenDate(Date dateFrom, Date dateBefore) {
+        return transactionRepository.findByDateBetween(dateFrom, dateBefore);
     }
 
-    private void recordTransactionMoney(AutomatonState automaticState) {
-        automatonStateRepository.findByAutomatonId(automaticState.getAutomatonId()).map(automaticState1 -> {
-            automaticState.setId(automaticState1.getId());
-            automaticState.setAutomatonId(automaticState1.getAutomatonId());
-            automaticState.setMoney(0);
-            return automaticState;
+    private void recordTransactionMoney(AutomatonState currentState) {
+        automatonStateRepository.findByAutomatonId(currentState.getAutomatonId()).map(previousState -> {
+            currentState.setAutomatonId(previousState.getAutomatonId());
+            currentState.setMoney(0);
+            return currentState;
         });
-        automatonStateRepository.saveAndFlush(automaticState);
+        automatonStateRepository.save(currentState);
     }
 
-    private void recordAutomatonState(AutomatonState automaticState) {
-        automatonStateRepository.findByAutomatonId(automaticState.getAutomatonId()).map(automaticState1 -> {
-            automaticState.setId(automaticState1.getId());
-            automaticState.setAutomatonId(automaticState1.getAutomatonId());
-            automaticState.setWater(automaticState1.getWater() + automaticState.getWater());
-            automaticState.setMoney(automaticState1.getMoney() + automaticState.getWater());
-            return automaticState;
+    private void recordAutomatonState(AutomatonState currentState) {
+        automatonStateRepository.findByAutomatonId(currentState.getAutomatonId()).map(previousState -> {
+            currentState.setAutomatonId(previousState.getAutomatonId());
+            currentState.setWater(previousState.getWater() + currentState.getWater());
+            currentState.setMoney(previousState.getMoney() + currentState.getMoney());
+            return currentState;
         });
-        automatonStateRepository.saveAndFlush(automaticState);
+        automatonStateRepository.save(currentState);
     }
 }

@@ -7,10 +7,12 @@ import com.org.house.service.TransactionService;
 import com.org.house.transfer.New;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -46,9 +48,9 @@ public class TransactionController {
     }
 
     @GetMapping("/reports/transactions")
-    public List<Transaction> getReportTransaction(@RequestParam String dateFrom,
-                                                  @RequestParam String dateBefore) throws ParseException {
-        return transactionService.getReportTransaction(dateFrom, dateBefore);
+    public List<Transaction> getReportByTransactionBetweenDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFrom,
+                                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore) {
+        return transactionService.getReportByTransactionBetweenDate(dateFrom, dateBefore);
     }
 
 }

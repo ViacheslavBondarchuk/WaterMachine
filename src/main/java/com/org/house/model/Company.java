@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
 
-	@OneToMany
-	@JoinColumn(name = "company_id")
-	private Set<User> users;
+    @OneToMany
+    @JoinColumn(name = "company_id")
+    private Set<User> users;
 
-	@OneToMany
-	@JoinColumn(name = "company_id")
-	private Set<Automaton> automatics;
+    @OneToMany
+    @JoinColumn(name = "company_id")
+    private Set<Automaton> automatics;
 
 }

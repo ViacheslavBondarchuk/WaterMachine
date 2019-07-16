@@ -1,13 +1,13 @@
 package com.org.house.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import lombok.AccessLevel;
-import lombok.Builder;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -16,13 +16,12 @@ import lombok.Builder;
 @NoArgsConstructor
 public class AutomatonState {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "automaton_id")
+    private long automatonId;
     @Column(name = "quantity_money")
     private double money;
     @Column(name = "quantity_water")
     private double water;
-    @Column(name = "automaton_id")
-    private long automatonId;
+
 
 }
