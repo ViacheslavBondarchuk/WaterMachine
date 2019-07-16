@@ -6,6 +6,7 @@ import com.org.house.transfer.Update;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import net.bytebuddy.implementation.bind.annotation.Empty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -41,6 +42,5 @@ public class UserDTO {
     @NotNull(groups = {Update.class})
     private boolean isCredentialsNonExpired;
 
-    @Null
     private Set<Authority> authorities;
 }

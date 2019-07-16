@@ -5,30 +5,35 @@ import com.org.house.model.Authority;
 import com.org.house.model.User;
 import com.org.house.repository.UserRepository;
 import javassist.NotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@Log4j2
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public User addUser(UserDTO userDTO) {
+    public void addUser(UserDTO userDTO) {
+        userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         userDTO.setEnabled(true);
         userDTO.setAccountNonExpired(true);
         userDTO.setAccountNonExpired(true);
         userDTO.setCredentialsNonExpired(true);
         userDTO.setAuthorities(Collections.singleton(Authority.USER));
 
-        return userRepository.save(new ModelMapper().map(userDTO, User.class));
+        log.info("User was saved");
+        userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
     public List<User> getAllUser() {

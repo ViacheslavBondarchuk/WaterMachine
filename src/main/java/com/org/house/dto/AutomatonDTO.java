@@ -19,5 +19,8 @@ public class AutomatonDTO {
 	private int id;
 	@NotBlank(groups = { New.class, Update.class })
 	private String tradeMark;
+	@NotBlank(groups = { New.class, Update.class })
+	private long company_id;
+
 
 }
