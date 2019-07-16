@@ -17,11 +17,6 @@ public enum Authority implements GrantedAuthority {
 	private Set<User> user;
 
 	@Override
-	public String toString() {
-		return name();
-	}
-
-	@Override
 	public String getAuthority() {
 		return name();
 	}

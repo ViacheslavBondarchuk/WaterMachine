@@ -1,7 +1,9 @@
 package com.org.house.service;
 
-import java.util.List;
-
+import com.org.house.dto.UserDTO;
+import com.org.house.model.Authority;
+import com.org.house.model.User;
+import com.org.house.repository.UserRepository;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.org.house.dto.UserDTO;
-import com.org.house.model.User;
-import com.org.house.repository.UserRepository;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,6 +22,12 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     public User addUser(UserDTO userDTO) {
+        userDTO.setEnabled(true);
+        userDTO.setAccountNonExpired(true);
+        userDTO.setAccountNonExpired(true);
+        userDTO.setCredentialsNonExpired(true);
+        userDTO.setAuthorities(Collections.singleton(Authority.USER));
+
         return userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
@@ -29,16 +36,15 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(UserDTO userDTO) {
-        return userRepository.saveAndFlush(new ModelMapper().map(userDTO, User.class));
+        return userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
     public User getUserById(long id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User by " + id + " was not found"));
     }
 
-    public void deleteUser(long id) {
+    public void deleteUserById(long id) {
         userRepository.deleteById(id);
-
     }
 
     @Override
