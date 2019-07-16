@@ -36,20 +36,4 @@ public class TransactionController {
         return transactionService.moneyToZero(transaction);
     }
 
-    @GetMapping("/reports/automatons/{id}")
-    public AutomatonState getReportByAutomaton(@PathVariable long id) throws NotFoundException {
-        return transactionService.getReportByAutomaton(id);
-    }
-
-    @GetMapping("/reports/automatons")
-    public List<AutomatonState> getReportAutomatons() {
-        return transactionService.getReportAutomatons();
-    }
-
-    @GetMapping("/reports/transactions")
-    public List<Transaction> getReportByTransactionBetweenDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFrom,
-                                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore) {
-        return transactionService.getReportByTransactionBetweenDate(dateFrom, dateBefore);
-    }
-
 }
