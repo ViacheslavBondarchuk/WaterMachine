@@ -49,6 +49,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUserById(long id) {
+        log.info("User was deleted");
         userRepository.deleteById(id);
     }
 
