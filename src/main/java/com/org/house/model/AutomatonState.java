@@ -22,6 +22,8 @@ public class AutomatonState {
     private double money;
     @Column(name = "quantity_water")
     private double water;
+    @Column(name = "company_id")
+    private long companyId;
 
 
 }

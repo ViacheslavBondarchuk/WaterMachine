@@ -7,4 +7,5 @@ import com.org.house.model.Company;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
+
 }

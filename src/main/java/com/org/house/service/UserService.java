@@ -36,16 +36,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
-    public List<User> getAllUser() {
-        return userRepository.findAll();
-    }
-
     public User updateUser(UserDTO userDTO) {
         return userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
     public User getUserById(long id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User by " + id + " was not found"));
+    }
+
+    public List<User> findByCompanyId(long companyId) {
+        return userRepository.findByCompanyId(companyId);
     }
 
     public void deleteUserById(long id) {

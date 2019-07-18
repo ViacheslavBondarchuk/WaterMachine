@@ -19,18 +19,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	@Column(name = "account_id")
-	private int accountId;
-	@Column(name = "automatic_id")
-	private int automaticId;
-	private double cost;
-	@Temporal(TemporalType.DATE)
-	private Date date;
-	@Column(name = "quantity_water")
-	private double quantityWater;
-	@Column(name = "get_money")
-	private boolean getMoney;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @Column(name = "account_id")
+    private int accountId;
+    @Column(name = "automaton_id")
+    private int automatonId;
+    @Column(name = "copmany_id")
+    private long companyId;
+    private double cost;
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    @Column(name = "quantity_water")
+    private double quantityWater;
+    @Column(name = "get_money")
+    private boolean getMoney;
 }

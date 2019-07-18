@@ -4,6 +4,7 @@ import com.org.house.model.AutomatonState;
 import com.org.house.model.Transaction;
 import com.org.house.repository.AutomatonStateRepository;
 import com.org.house.repository.TransactionRepository;
+import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,20 @@ public class ReportService {
     private AutomatonStateRepository automatonStateRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private SecurityInformation securityInformation;
 
     public List<AutomatonState> getReportAutomatons() {
-        return automatonStateRepository.findAll();
+        return automatonStateRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
     public AutomatonState getReportByAutomatonId(long id) throws NotFoundException {
-        return automatonStateRepository.findByAutomatonId(id).orElseThrow(() -> new NotFoundException("Automaton " + id + " was not found"));
+        return automatonStateRepository.findByAutomatonIdAndCompanyId(id
+                , securityInformation.getUserCompanyId())
+                .orElseThrow(() -> new NotFoundException("Automaton " + id + " was not found"));
     }
 
     public List<Transaction> getReportByTransactionBetweenDate(Date dateFrom, Date dateBefore) {
-        return transactionRepository.findByDateBetween(dateFrom, dateBefore);
+        return transactionRepository.findByDateBetweenAndCompanyId(dateFrom, dateBefore, securityInformation.getUserCompanyId());
     }
 }

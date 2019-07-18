@@ -3,6 +3,7 @@ package com.org.house.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import com.org.house.transfer.Update;
 
 import javassist.NotFoundException;
 
+@Secured("ADMIN")
 @RestController
 @RequestMapping("/automatons")
 public class AutomatonController {
@@ -30,26 +32,26 @@ public class AutomatonController {
 
     @PostMapping
     public Automaton addAutomaton(@Validated(New.class) @RequestBody AutomatonDTO automatonDTO) {
-        return automatonService.addAutomatic(automatonDTO);
+        return automatonService.addAutomaton(automatonDTO);
     }
 
     @GetMapping
     public List<Automaton> getAllAutomatons() {
-        return automatonService.getAllAutomatic();
+        return automatonService.getAllAutomaton();
     }
 
     @PutMapping
     public Automaton updateAutomaton(@Validated(Update.class) @RequestBody AutomatonDTO automatonDTO) {
         return automatonService.updateAutomaton(automatonDTO);
     }
-    
+
     @GetMapping("/{id}")
     public Automaton getOneAutomaton(@PathVariable long id) throws NotFoundException {
-    	return automatonService.getOneAutomaton(id);
+        return automatonService.getOneAutomaton(id);
     }
 
     @DeleteMapping("/{id}")
-    public void autmatonDelete(@PathVariable int id) {
+    public void autmatonDelete(@PathVariable int id) throws NotFoundException {
         automatonService.deleteAutomaton(id);
     }
 }

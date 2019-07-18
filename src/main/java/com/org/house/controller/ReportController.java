@@ -6,11 +6,13 @@ import com.org.house.service.ReportService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
+@Secured("ADMIN")
 @RestController
 @RequestMapping("/reports")
 public class ReportController {
@@ -28,8 +30,9 @@ public class ReportController {
     }
 
     @GetMapping("/reports/transactions")
-    public List<Transaction> getReportByTransactionBetweenDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFrom,
-                                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore) {
+    public List<Transaction> getReportByTransactionBetweenDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFrom,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore) {
         return reportService.getReportByTransactionBetweenDate(dateFrom, dateBefore);
     }
 

@@ -12,16 +12,15 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(
-        columnNames = "username")})
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
-    private int company_id;
+    @Column(name = "company_id")
+    private long companyId;
     private String password;
-    @Column(unique = true)
     private String username;
     private boolean isEnabled;
     private boolean isAccountNonLocked;

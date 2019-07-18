@@ -2,6 +2,7 @@ package com.org.house.service;
 
 import java.util.List;
 
+import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,13 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private SecurityInformation securityInformation;
+
+    private ModelMapper modelMapper;
 
     public Company addCompany(CompanyDTO companyDTO) {
-        return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
+        return companyRepository.save(modelMapper.map(companyDTO, Company.class));
     }
 
     public List<Company> getAllCompany() {
@@ -37,7 +42,7 @@ public class CompanyService {
     }
 
     public Company updateCompany(CompanyDTO companyDTO) {
-        return companyRepository.save(new ModelMapper().map(companyDTO, Company.class));
+        return companyRepository.save(modelMapper.map(companyDTO, Company.class));
     }
 
 }
