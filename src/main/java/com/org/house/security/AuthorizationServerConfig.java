@@ -1,5 +1,6 @@
 package com.org.house.security;
 
+import com.org.house.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +33,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 6 * 60 * 60;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UserService userService;
     @Autowired
-    private DataSource dataSource;
+    private AuthenticationManager authenticationManager;
 
     @Bean
     public JwtAccessTokenConverter tokenConverter() {
@@ -52,8 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .jdbc(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder())
+                .inMemory()
                 .withClient(CLIEN_ID)
                 .secret(CLIENT_SECRET)
                 .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT)
@@ -65,6 +65,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
+                .userDetailsService(userService) //
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(tokenConverter());
