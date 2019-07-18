@@ -3,10 +3,14 @@ package com.org.house.service;
 import com.org.house.dto.TransactionDTO;
 import com.org.house.model.AutomatonState;
 import com.org.house.model.Transaction;
+import com.org.house.model.User;
 import com.org.house.repository.AutomatonStateRepository;
 import com.org.house.repository.TransactionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +23,13 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AutomatonStateRepository automatonStateRepository;
+
+    private UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+            .getAuthentication().getDetails();
+
+    private String getUsername(){
+        return userDetails.getUsername();
+    }
 
     @Transactional
     public Transaction addWater(TransactionDTO transactionDTO) {
