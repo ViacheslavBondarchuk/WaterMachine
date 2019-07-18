@@ -24,13 +24,6 @@ public class TransactionService {
     @Autowired
     private AutomatonStateRepository automatonStateRepository;
 
-    private UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-            .getAuthentication().getDetails();
-
-    private String getUsername(){
-        return userDetails.getUsername();
-    }
-
     @Transactional
     public Transaction addWater(TransactionDTO transactionDTO) {
         AutomatonState automatonState = AutomatonState.builder()
