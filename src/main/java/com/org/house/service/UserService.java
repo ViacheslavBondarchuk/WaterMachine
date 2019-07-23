@@ -41,7 +41,6 @@ public class UserService implements UserDetailsService {
         userDTO.setAccountNonExpired(true);
         userDTO.setCredentialsNonExpired(true);
 
-        log.info("User was saved");
         if (userDTO.isOwner()) {
             userDTO.setAuthorities(Collections.singleton(Authority.OWNER));
             ownerRepository.save(modelMapper.map(userDTO, Owner.class));
@@ -51,6 +50,7 @@ public class UserService implements UserDetailsService {
         } else {
             userDTO.setAuthorities(Collections.singleton(Authority.USER));
         }
+        log.info("User was saved");
         userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
