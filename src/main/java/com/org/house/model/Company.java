@@ -1,17 +1,14 @@
 package com.org.house.model;
 
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,9 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long owner_id;
+
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "company_id")
+    private Set<Master> masters;
 
     @OneToMany
     @JoinColumn(name = "company_id")

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface AutomatonRepository extends JpaRepository<Automaton, Long> {
+
     Optional<Automaton> findByIdAndCompanyId(long id, long companyID);
 
     List<Automaton> findByCompanyId(long companyID);

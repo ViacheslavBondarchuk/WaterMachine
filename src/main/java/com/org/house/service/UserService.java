@@ -2,7 +2,11 @@ package com.org.house.service;
 
 import com.org.house.dto.UserDTO;
 import com.org.house.model.Authority;
+import com.org.house.model.Master;
+import com.org.house.model.Owner;
 import com.org.house.model.User;
+import com.org.house.repository.MasterRepository;
+import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +27,12 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
+    @Autowired
+    private MasterRepository masterRepository;
+
+    private ModelMapper modelMapper = new ModelMapper();
 
     public void addUser(UserDTO userDTO) {
         userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
@@ -30,10 +40,18 @@ public class UserService implements UserDetailsService {
         userDTO.setAccountNonExpired(true);
         userDTO.setAccountNonExpired(true);
         userDTO.setCredentialsNonExpired(true);
-        userDTO.setAuthorities(Collections.singleton(Authority.USER));
 
         log.info("User was saved");
-        userRepository.save(new ModelMapper().map(userDTO, User.class));
+        if (userDTO.isOwner()) {
+            userDTO.setAuthorities(Collections.singleton(Authority.OWNER));
+            ownerRepository.save(modelMapper.map(userDTO, Owner.class));
+        } else if (userDTO.isMaster()) {
+            userDTO.setAuthorities(Collections.singleton(Authority.MASTER));
+            masterRepository.save(modelMapper.map(userDTO, Master.class));
+        } else {
+            userDTO.setAuthorities(Collections.singleton(Authority.USER));
+        }
+        userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
     public User updateUser(UserDTO userDTO) {
@@ -53,9 +71,12 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+
+    //Method from UserDetailsServrice
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User: " + username + "has been not found"));
     }
+
 }

@@ -22,6 +22,9 @@ public class User implements UserDetails {
     private long companyId;
     private String password;
     private String username;
+    private long master_id;
+    private boolean isOwner;
+    private boolean isMaster;
     private boolean isEnabled;
     private boolean isAccountNonLocked;
     private boolean isAccountNonExpired;

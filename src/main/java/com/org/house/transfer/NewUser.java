@@ -1,5 +1,5 @@
 package com.org.house.transfer;
 
-public interface Update {
+public interface NewUser {
 
 }

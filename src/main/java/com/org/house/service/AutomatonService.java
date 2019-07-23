@@ -18,6 +18,7 @@ public class AutomatonService {
     private AutomatonRepository automatonRepository;
     @Autowired
     private SecurityInformation securityInformation;
+
     private ModelMapper modelMapper = new ModelMapper();
 
     public Automaton addAutomaton(AutomatonDTO automatonDTO) {
@@ -28,9 +29,17 @@ public class AutomatonService {
         return automatonRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
-    public Automaton updateAutomaton(AutomatonDTO automatonDTO) {
-        return automatonRepository.save(modelMapper.map(automatonDTO, Automaton.class));
+    public void updateAutomaton(AutomatonDTO automatonDTO) throws NotFoundException {
+        Automaton automaton = automatonRepository
+                .findByIdAndCompanyId(automatonDTO.getId(), automatonDTO.getCompany_id())
+                .orElseThrow(() -> new NotFoundException("Automat has been not found"));
+
+        if (automaton != null) {
+            automatonDTO.setCompany_id(automaton.getCompanyId());
+            automatonRepository.save(modelMapper.map(automatonDTO, Automaton.class));
+        }
     }
+
 
     public Automaton getOneAutomaton(long id) throws NotFoundException {
         return automatonRepository.findByIdAndCompanyId(id, securityInformation.getUserCompanyId())

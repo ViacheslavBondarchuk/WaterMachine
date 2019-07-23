@@ -1,7 +1,7 @@
 package com.org.house.dto;
 
-import com.org.house.transfer.New;
-import com.org.house.transfer.Update;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,21 +13,21 @@ import java.util.Date;
 @Setter
 public class TransactionDTO {
 
-    @Null(groups = {New.class})
+    @Null(groups = {NewUser.class})
     private long id;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private long accountId;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private long automaticId;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private long companyId;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private double cost;
-    @Null(groups = {New.class, Update.class})
+    @Null(groups = {NewUser.class, UpdateUser.class})
     private Date date;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private double quantityWater;
-    @NotBlank(groups = {New.class, Update.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private boolean getMoney;
 
 }

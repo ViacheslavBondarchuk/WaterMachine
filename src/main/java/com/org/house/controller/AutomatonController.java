@@ -5,20 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.org.house.dto.AutomatonDTO;
 import com.org.house.model.Automaton;
 import com.org.house.service.AutomatonService;
-import com.org.house.transfer.New;
-import com.org.house.transfer.Update;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateUser;
 
 import javassist.NotFoundException;
 
@@ -31,7 +24,7 @@ public class AutomatonController {
     private AutomatonService automatonService;
 
     @PostMapping
-    public Automaton addAutomaton(@Validated(New.class) @RequestBody AutomatonDTO automatonDTO) {
+    public Automaton addAutomaton(@Validated(NewUser.class) @RequestBody AutomatonDTO automatonDTO) {
         return automatonService.addAutomaton(automatonDTO);
     }
 
@@ -40,14 +33,15 @@ public class AutomatonController {
         return automatonService.getAllAutomaton();
     }
 
-    @PutMapping
-    public Automaton updateAutomaton(@Validated(Update.class) @RequestBody AutomatonDTO automatonDTO) {
-        return automatonService.updateAutomaton(automatonDTO);
-    }
-
     @GetMapping("/{id}")
     public Automaton getOneAutomaton(@PathVariable long id) throws NotFoundException {
         return automatonService.getOneAutomaton(id);
+    }
+
+    @PatchMapping
+    public void updateAutomatoonById(@Validated(UpdateUser.class) @RequestBody AutomatonDTO automaton) throws NotFoundException {
+        automatonService.updateAutomaton(automaton);
+
     }
 
     @DeleteMapping("/{id}")

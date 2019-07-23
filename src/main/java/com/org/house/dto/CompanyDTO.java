@@ -9,8 +9,8 @@ import javax.validation.constraints.Null;
 
 import com.org.house.model.Automaton;
 import com.org.house.model.User;
-import com.org.house.transfer.New;
-import com.org.house.transfer.Update;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,16 +19,18 @@ import lombok.Setter;
 @Setter
 public class CompanyDTO {
 
-	@Null(groups = { New.class })
-	@NotNull(groups = { Update.class })
-	private long id;
+    @Null(groups = {NewUser.class})
+    @NotNull(groups = {UpdateUser.class})
+    private long id;
 
-	@NotBlank(groups = { New.class, Update.class })
-	private String name;
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+    private String name;
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+    private long owner_id;
 
-	@Valid
-	private Set<User> users;
-	@Valid
-	private Set<Automaton> automatics;
+    @Valid
+    private Set<User> users;
+    @Valid
+    private Set<Automaton> automatics;
 
 }

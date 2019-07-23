@@ -1,18 +1,16 @@
 package com.org.house.service;
 
-import java.util.List;
-
+import com.org.house.dto.CompanyDTO;
+import com.org.house.model.Company;
+import com.org.house.repository.CompanyRepository;
 import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.org.house.dto.CompanyDTO;
-import com.org.house.model.Company;
-import com.org.house.repository.CompanyRepository;
-
-import lombok.extern.log4j.Log4j2;
+import java.util.List;
 
 @Log4j2
 @Service
@@ -41,8 +39,13 @@ public class CompanyService {
         companyRepository.deleteById(id);
     }
 
-    public Company updateCompany(CompanyDTO companyDTO) {
-        return companyRepository.save(modelMapper.map(companyDTO, Company.class));
+    public void updateCompany(CompanyDTO companyDTO) throws NotFoundException {
+//        Company company = companyRepository.findById(companyDTO.getId())
+//                .orElseThrow(() -> new NotFoundException("Company was not found"));
+//
+//        if (company != null && securityInformation.getUserCompanyId() == companyDTO.getId()) {
+//            companyRepository.save(modelMapper.map(companyDTO, Company.class)); Переписати
+//        }
     }
 
 }

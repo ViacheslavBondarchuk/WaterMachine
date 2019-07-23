@@ -5,20 +5,21 @@ import java.util.Set;
 import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
+
 @Entity
 public enum Authority implements GrantedAuthority {
-	USER, ADMIN;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    USER, MASTER, OWNER, ADMIN;
 
-	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-	private Set<User> user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	@Override
-	public String getAuthority() {
-		return name();
-	}
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
+    private Set<User> user;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 
 }

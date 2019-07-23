@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-import com.org.house.transfer.New;
-import com.org.house.transfer.Update;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +13,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AutomatonStateDTO {
-	@Null(groups = { New.class })
-	@NotNull(groups = { Update.class })
+	@Null(groups = { NewUser.class })
+	@NotNull(groups = { UpdateUser.class })
 	private long id;
-	@NotBlank(groups = { New.class, Update.class })
+	@NotBlank(groups = { NewUser.class, UpdateUser.class })
 	private double money;
-	@NotBlank(groups = { New.class, Update.class })
+	@NotBlank(groups = { NewUser.class, UpdateUser.class })
 	private double water;
-	@NotNull(groups = { New.class })
-	@Null(groups = { Update.class })
+	@NotNull(groups = { NewUser.class })
+	@Null(groups = { UpdateUser.class })
 	private long automatonId;
 }
