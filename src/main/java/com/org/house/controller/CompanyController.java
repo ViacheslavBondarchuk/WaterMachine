@@ -38,7 +38,7 @@ public class CompanyController {
         return companyService.getOneCompany(id);
     }
 
-    @PreAuthorize("OWNER")
+    @Secured("OWNER")
     @PatchMapping
     public void updateCompany(@Validated(UpdateUser.class) @RequestBody CompanyDTO companyDTO) {
 //        companyService.updateCompany(companyDTO);
