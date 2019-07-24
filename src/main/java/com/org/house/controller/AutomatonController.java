@@ -1,19 +1,17 @@
 package com.org.house.controller;
 
-import java.util.List;
-
+import com.org.house.dto.AutomatonDTO;
+import com.org.house.model.Automaton;
+import com.org.house.service.AutomatonService;
+import com.org.house.transfer.NewAutomaton;
+import com.org.house.transfer.UpdateAutomaton;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.org.house.dto.AutomatonDTO;
-import com.org.house.model.Automaton;
-import com.org.house.service.AutomatonService;
-import com.org.house.transfer.NewUser;
-import com.org.house.transfer.UpdateUser;
-
-import javassist.NotFoundException;
+import java.util.List;
 
 @Secured("ADMIN")
 @RestController
@@ -24,7 +22,7 @@ public class AutomatonController {
     private AutomatonService automatonService;
 
     @PostMapping
-    public Automaton addAutomaton(@Validated(NewUser.class) @RequestBody AutomatonDTO automatonDTO) {
+    public Automaton addAutomaton(@Validated(NewAutomaton.class) @RequestBody AutomatonDTO automatonDTO) {
         return automatonService.addAutomaton(automatonDTO);
     }
 
@@ -39,7 +37,7 @@ public class AutomatonController {
     }
 
     @PatchMapping
-    public void updateAutomatoonById(@Validated(UpdateUser.class) @RequestBody AutomatonDTO automaton) throws NotFoundException {
+    public void updateAutomatoonById(@Validated(UpdateAutomaton.class) @RequestBody AutomatonDTO automaton) throws NotFoundException {
         automatonService.updateAutomaton(automaton);
 
     }

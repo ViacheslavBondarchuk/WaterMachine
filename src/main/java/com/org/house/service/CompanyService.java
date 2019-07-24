@@ -40,12 +40,12 @@ public class CompanyService {
     }
 
     public void updateCompany(CompanyDTO companyDTO) throws NotFoundException {
-//        Company company = companyRepository.findById(companyDTO.getId())
-//                .orElseThrow(() -> new NotFoundException("Company was not found"));
-//
-//        if (company != null && securityInformation.getUserCompanyId() == companyDTO.getId()) {
-//            companyRepository.save(modelMapper.map(companyDTO, Company.class)); Переписати
-//        }
+        Company company = companyRepository.findById(companyDTO.getId())
+                .orElseThrow(() -> new NotFoundException("Company was not found"));
+
+        if (company != null && securityInformation.getUserCompanyId() == companyDTO.getId()) {
+            companyRepository.save(modelMapper.map(companyDTO, Company.class));
+        }
     }
 
 }

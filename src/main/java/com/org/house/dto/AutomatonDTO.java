@@ -1,25 +1,25 @@
 package com.org.house.dto;
 
+import com.org.house.transfer.NewAutomaton;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateAutomaton;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.sql.Update;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-import org.hibernate.sql.Update;
-
-import com.org.house.transfer.NewUser;
-
-import lombok.Getter;
-import lombok.Setter;
-
 @Getter
 @Setter
 public class AutomatonDTO {
-    @Null(groups = {NewUser.class})
-    @NotNull(groups = {Update.class})
+    @Null(groups = {NewAutomaton.class})
+    @NotNull(groups = {UpdateAutomaton.class})
     private int id;
-    @NotBlank(groups = {NewUser.class, Update.class})
+    @NotBlank(groups = {NewAutomaton.class, UpdateAutomaton.class})
     private String tradeMark;
-    @NotBlank(groups = {NewUser.class, Update.class})
+    @NotBlank(groups = {NewAutomaton.class, UpdateAutomaton.class})
     private long company_id;
 
 

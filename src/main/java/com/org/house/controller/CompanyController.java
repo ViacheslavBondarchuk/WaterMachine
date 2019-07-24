@@ -5,6 +5,7 @@ import java.util.List;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class CompanyController {
         return companyService.getOneCompany(id);
     }
 
+    @PreAuthorize("OWNER")
     @PatchMapping
     public void updateCompany(@Validated(UpdateUser.class) @RequestBody CompanyDTO companyDTO) {
 //        companyService.updateCompany(companyDTO);
