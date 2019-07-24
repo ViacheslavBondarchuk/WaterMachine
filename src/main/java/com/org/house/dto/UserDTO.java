@@ -31,14 +31,12 @@ public class UserDTO {
     @NotBlank(groups = {NewUser.class, UpdateUser.class})
     private long master_id;
 
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
+    @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
     private boolean isOwner;
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
+    @NotBlank(groups = {NewMaster.class, UpdateMaster.class})
     private boolean isMaster;
-    @Null(groups = {NewUser.class})
-    @NotNull(groups = {UpdateUser.class})
+    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
+    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
     private boolean isEnabled;
     @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
     @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})

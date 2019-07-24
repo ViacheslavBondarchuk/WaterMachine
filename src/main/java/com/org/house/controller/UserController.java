@@ -4,10 +4,7 @@ import com.org.house.dto.UserDTO;
 import com.org.house.model.Authority;
 import com.org.house.model.User;
 import com.org.house.service.UserService;
-import com.org.house.transfer.NewMaster;
-import com.org.house.transfer.NewOwner;
-import com.org.house.transfer.NewUser;
-import com.org.house.transfer.UpdateUser;
+import com.org.house.transfer.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -33,7 +30,8 @@ public class UserController {
 
     @PreAuthorize("permitAll()")
     @PatchMapping
-    public User updateUser(@Validated(UpdateUser.class) @RequestBody UserDTO userDTO) {
+    public User updateUser(@Validated({UpdateUser.class
+            , UpdateOwner.class, UpdateMaster.class}) @RequestBody UserDTO userDTO) {
         return userService.updateUser(userDTO);
     }
 
