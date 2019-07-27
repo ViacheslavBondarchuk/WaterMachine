@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/masters")
 public class MasterController {
-
     @Autowired
     private MasterService masterService;
 
@@ -28,7 +28,7 @@ public class MasterController {
 
     @GetMapping
     public List<Master> getAllMasterByCompanyId(@RequestParam long id) {
-       return masterService.getAllMasterByCompanyId(id);
+        return masterService.getAllMasterByCompanyId(id);
     }
 
     @DeleteMapping("/{id}")
