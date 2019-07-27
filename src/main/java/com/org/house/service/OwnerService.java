@@ -24,7 +24,7 @@ public class OwnerService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("Owner by: %d has been not found", ownerDTO.getId())));
 
-        if (owner.equals(null)) {
+        if (!owner.equals(null)) {
             log.debug("Owner has benn updated");
             ownerRepository.save(modelMapper.map(ownerDTO, Owner.class));
         }
