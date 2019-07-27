@@ -15,12 +15,14 @@ import com.org.house.service.CompanyService;
 import com.org.house.transfer.NewUser;
 import com.org.house.transfer.UpdateUser;
 
-@Secured("ADMIN")
+
 @RestController
+@Secured("ADMIN,OWNER")
 @RequestMapping("/companies")
 public class CompanyController {
 
     @Autowired
+
     private CompanyService companyService;
 
     @PostMapping
@@ -38,7 +40,6 @@ public class CompanyController {
         return companyService.getOneCompany(id);
     }
 
-    @Secured("OWNER")
     @PatchMapping
     public void updateCompany(@Validated(UpdateUser.class) @RequestBody CompanyDTO companyDTO) {
 //        companyService.updateCompany(companyDTO);

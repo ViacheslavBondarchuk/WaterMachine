@@ -13,6 +13,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class Master {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Column(name = "company_id")
     private long companyId;
 

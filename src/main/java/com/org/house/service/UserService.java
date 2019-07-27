@@ -2,11 +2,7 @@ package com.org.house.service;
 
 import com.org.house.dto.UserDTO;
 import com.org.house.model.Authority;
-import com.org.house.model.Master;
-import com.org.house.model.Owner;
 import com.org.house.model.User;
-import com.org.house.repository.MasterRepository;
-import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
@@ -27,35 +23,24 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private OwnerRepository ownerRepository;
-    @Autowired
-    private MasterRepository masterRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
 
     public void addUser(UserDTO userDTO) {
         userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         userDTO.setEnabled(true);
-        userDTO.setAccountNonExpired(true);
+        userDTO.setAccountNonLocked(true);
         userDTO.setAccountNonExpired(true);
         userDTO.setCredentialsNonExpired(true);
+        userDTO.setAuthorities(Collections.singleton(Authority.USER));
 
-        if (userDTO.isOwner()) {
-            userDTO.setAuthorities(Collections.singleton(Authority.OWNER));
-            ownerRepository.save(modelMapper.map(userDTO, Owner.class));
-        } else if (userDTO.isMaster()) {
-            userDTO.setAuthorities(Collections.singleton(Authority.MASTER));
-            masterRepository.save(modelMapper.map(userDTO, Master.class));
-        } else {
-            userDTO.setAuthorities(Collections.singleton(Authority.USER));
-        }
-        log.info("User was saved");
+        log.info("User was added");
         userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
-    public User updateUser(UserDTO userDTO) {
-        return userRepository.save(new ModelMapper().map(userDTO, User.class));
+    public void updateUser(UserDTO userDTO) {
+        log.info("User was updated");
+        userRepository.save(new ModelMapper().map(userDTO, User.class));
     }
 
     public User getUserById(long id) throws NotFoundException {
@@ -71,6 +56,9 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+
+
+//    Method from interface'UserDetailsService'
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)

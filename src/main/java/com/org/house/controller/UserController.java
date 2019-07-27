@@ -1,10 +1,10 @@
 package com.org.house.controller;
 
 import com.org.house.dto.UserDTO;
-import com.org.house.model.Authority;
 import com.org.house.model.User;
 import com.org.house.service.UserService;
-import com.org.house.transfer.*;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateUser;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -23,16 +23,14 @@ public class UserController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public void addUser(@Validated({NewOwner.class,
-            NewMaster.class, NewUser.class}) @RequestBody UserDTO userDTO) {
+    public void addUser(@Validated(NewUser.class) @RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
     @PreAuthorize("permitAll()")
     @PatchMapping
-    public User updateUser(@Validated({UpdateUser.class
-            , UpdateOwner.class, UpdateMaster.class}) @RequestBody UserDTO userDTO) {
-        return userService.updateUser(userDTO);
+    public void updateUser(@Validated(UpdateUser.class) @RequestBody UserDTO userDTO) {
+        userService.updateUser(userDTO);
     }
 
     @Secured("ADMIN,OWNER")
