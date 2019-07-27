@@ -31,7 +31,7 @@ public class MasterService {
         return masterRepository.findAllByCompanyId(id)
                 .orElseThrow(
                         () -> new UsernameNotFoundException(String.format(
-                                "Masters by %d company id has been not found", id)));
+                                "Masters by: %d company id has been not found", id)));
     }
 
 
@@ -39,7 +39,7 @@ public class MasterService {
         Master master = masterRepository.findById(masterDTO.getCompanyId())
                 .orElseThrow(
                         () -> new UsernameNotFoundException(
-                                String.format("Master by %d has been not found", masterDTO.getCompanyId())));
+                                String.format("Master by: %d has been not found", masterDTO.getCompanyId())));
 
         if (!master.equals(null)) {
             log.debug("Master has been updated");
