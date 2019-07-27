@@ -67,8 +67,7 @@ public class TransactionService {
     }
 
     private void recordTransactionMoney(AutomatonState currentState) {
-        automatonStateRepository.findByAutomatonIdAndCompanyId(currentState.getAutomatonId()
-                , securityInformation.getUserCompanyId())
+        automatonStateRepository.findByAutomatonIdAndCompanyId(currentState.getAutomatonId(), securityInformation.getUserCompanyId())
                 .map(previousState -> {
                     currentState.setAutomatonId(previousState.getAutomatonId());
                     currentState.setMoney(0);
@@ -78,8 +77,7 @@ public class TransactionService {
     }
 
     private void recordAutomatonState(AutomatonState currentState) {
-        automatonStateRepository.findByAutomatonIdAndCompanyId(currentState.getAutomatonId()
-                , securityInformation.getUserCompanyId())
+        automatonStateRepository.findByAutomatonIdAndCompanyId(currentState.getAutomatonId(), securityInformation.getUserCompanyId())
                 .map(previousState -> {
                     currentState.setAutomatonId(previousState.getAutomatonId());
                     currentState.setWater(previousState.getWater() + currentState.getWater());

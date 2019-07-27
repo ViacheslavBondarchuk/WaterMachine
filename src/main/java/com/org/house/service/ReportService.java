@@ -27,9 +27,9 @@ public class ReportService {
     }
 
     public AutomatonState getReportByAutomatonId(long id) throws NotFoundException {
-        return automatonStateRepository.findByAutomatonIdAndCompanyId(id
-                , securityInformation.getUserCompanyId())
-                .orElseThrow(() -> new NotFoundException("Automaton " + id + " was not found"));
+        return automatonStateRepository.findByAutomatonIdAndCompanyId(id, securityInformation.getUserCompanyId())
+                .orElseThrow(
+                        () -> new NotFoundException("Automaton has been not found"));
     }
 
     public List<Transaction> getReportByTransactionBetweenDate(Date dateFrom, Date dateBefore) {

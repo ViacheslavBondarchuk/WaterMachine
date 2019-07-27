@@ -5,12 +5,14 @@ import com.org.house.model.Automaton;
 import com.org.house.repository.AutomatonRepository;
 import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log4j2
 @Service
 public class AutomatonService {
 
@@ -18,7 +20,6 @@ public class AutomatonService {
     private AutomatonRepository automatonRepository;
     @Autowired
     private SecurityInformation securityInformation;
-
     private ModelMapper modelMapper = new ModelMapper();
 
     public Automaton addAutomaton(AutomatonDTO automatonDTO) {
@@ -30,12 +31,12 @@ public class AutomatonService {
     }
 
     public void updateAutomaton(AutomatonDTO automatonDTO) throws NotFoundException {
-        Automaton automaton = automatonRepository
-                .findByIdAndCompanyId(automatonDTO.getId(), automatonDTO.getCompany_id())
-                .orElseThrow(() -> new NotFoundException("Automat has been not found"));
+        Automaton automaton = automatonRepository.findByIdAndCompanyId(automatonDTO.getId(), automatonDTO.getCompany_id())
+                .orElseThrow(
+                        () -> new NotFoundException("Automat has been not found"));
 
-        if (automaton != null) {
-            automatonDTO.setCompany_id(automaton.getCompanyId());
+        if (!automaton.equals(null)) {
+            log.debug("Automaton was updated");
             automatonRepository.save(modelMapper.map(automatonDTO, Automaton.class));
         }
     }
@@ -47,7 +48,7 @@ public class AutomatonService {
     }
 
     public void deleteAutomaton(long id) throws NotFoundException {
-        automatonRepository.deleteByIdAndCompanyId(id, securityInformation
-                .getUserCompanyId());
+        log.debug("Automaton was deleted");
+        automatonRepository.deleteByIdAndCompanyId(id, securityInformation.getUserCompanyId());
     }
 }
