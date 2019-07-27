@@ -13,4 +13,6 @@ public interface MasterRepository extends JpaRepository<Master, Long> {
     Optional<Master> findByIdAndCompanyId(long id, long companyId);
 
     Optional<List<Master>> findAllByCompanyId(long id);
+
+    void deleteByIdAndCompanyId(long id, long companyId);
 }

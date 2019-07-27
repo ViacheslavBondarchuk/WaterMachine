@@ -49,6 +49,6 @@ public class MasterService {
 
     public void delete(long id) {
         log.debug("Master has been deleted");
-        masterRepository.deleteById(id);
+        masterRepository.deleteByIdAndCompanyId(id, securityInformation.getUserCompanyId());
     }
 }
