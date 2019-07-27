@@ -2,7 +2,11 @@ package com.org.house.service;
 
 import com.org.house.dto.UserDTO;
 import com.org.house.model.Authority;
+import com.org.house.model.Master;
+import com.org.house.model.Owner;
 import com.org.house.model.User;
+import com.org.house.repository.MasterRepository;
+import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
@@ -21,12 +25,20 @@ import java.util.List;
 @Log4j2
 @Service
 public class UserService implements UserDetailsService {
-
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
+    private OwnerRepository ownerRepository;
+    private MasterRepository masterRepository;
     private SecurityInformation securityInformation;
     private ModelMapper modelMapper = new ModelMapper();
+
+    @Autowired
+    public UserService(UserRepository userRepository, OwnerRepository ownerRepository
+            , MasterRepository masterRepository, SecurityInformation securityInformation) {
+        this.userRepository = userRepository;
+        this.ownerRepository = ownerRepository;
+        this.masterRepository = masterRepository;
+        this.securityInformation = securityInformation;
+    }
 
     public void addUser(UserDTO userDTO) {
         userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
@@ -36,8 +48,16 @@ public class UserService implements UserDetailsService {
         userDTO.setCredentialsNonExpired(true);
         userDTO.setAuthorities(Collections.singleton(Authority.USER));
 
+        if (userDTO.isOwner()) {
+            ownerRepository.save(modelMapper.map(userDTO, Owner.class));
+            userRepository.save(modelMapper.map(userDTO, User.class));
+        } else if (userDTO.isMaster()) {
+            masterRepository.save(modelMapper.map(userDTO, Master.class));
+            userRepository.save(modelMapper.map(userDTO, User.class));
+        } else {
+            userRepository.save(modelMapper.map(userDTO, User.class));
+        }
         log.debug("User was added");
-        userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
     public void updateUser(UserDTO userDTO) {
@@ -71,7 +91,8 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User: " + username + "has been not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        String.format("User by %s has been not found", username)));
     }
 
 }
