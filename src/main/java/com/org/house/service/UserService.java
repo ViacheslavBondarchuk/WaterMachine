@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
                         () -> new UsernameNotFoundException("User has been not found"));
 
         if (!user.equals(null)) {
-            log.debug(String.format("User by %d has been updated",userDTO.getId()));
+            log.debug(String.format("User by %d has been updated", userDTO.getId()));
             userRepository.save(modelMapper.map(userDTO, User.class));
         }
     }
@@ -54,11 +54,11 @@ public class UserService implements UserDetailsService {
     public User getUserById(long id) throws NotFoundException {
         return userRepository.findByIdAndCompanyId(id, securityInformation.getUserCompanyId())
                 .orElseThrow(
-                        () -> new NotFoundException("User by " + id + " was not found"));
+                        () -> new NotFoundException("User`s has beeb not found not found"));
     }
 
-    public List<User> getAllByCompanyId(long companyId) {
-        return userRepository.findByCompanyId(companyId);
+    public List<User> getAllByCompanyId() {
+        return userRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
     public void deleteUserById(long id) {

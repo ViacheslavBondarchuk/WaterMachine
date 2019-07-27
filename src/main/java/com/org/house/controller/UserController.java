@@ -22,7 +22,8 @@ public class UserController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public void addUser(@Validated({NewOwner.class, NewMaster.class, NewUser.class}) @RequestBody UserDTO userDTO) {
+    public void addUser(@Validated({NewOwner.class, NewMaster.class
+            , NewUser.class}) @RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
@@ -35,8 +36,8 @@ public class UserController {
 
     @Secured("ADMIN,OWNER")
     @GetMapping
-    public List<User> getByCompanyId(@RequestParam long companyId) {
-        return userService.findByCompanyId(companyId);
+    public List<User> getUserByCompanyId() {
+        return userService.getAllByCompanyId();
     }
 
     @Secured("ADMIN")
