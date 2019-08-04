@@ -41,7 +41,6 @@ public class AutomatonService {
         Automaton automaton = query.selectFrom(qAutomaton)
                 .where(qAutomaton.id.eq(automatonDTO.getId())
                         .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-
         if (automaton.equals(null)) {
             throw new UsernameNotFoundException("Automaton has been not found");
         }
