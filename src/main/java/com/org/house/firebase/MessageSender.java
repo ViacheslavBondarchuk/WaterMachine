@@ -1,4 +1,4 @@
-package firebase;
+package com.org.house.firebase;
 
 import org.springframework.stereotype.Component;
 
