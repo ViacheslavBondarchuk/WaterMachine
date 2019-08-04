@@ -22,7 +22,6 @@ public class User implements UserDetails {
     private long companyId;
     private String password;
     private String username;
-    private long master_id;
     private boolean isOwner;
     private boolean isMaster;
     private boolean isEnabled;
@@ -36,5 +35,11 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private Set<Authority> authorities;
+
+    @ManyToMany
+    @JoinTable(name = "masters_relations",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "master_id", referencedColumnName = "id")})
+    private Set<Master> masters;
 
 }

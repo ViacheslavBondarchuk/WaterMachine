@@ -22,7 +22,6 @@ public class Master {
     private String firstName;
     private String lastName;
 
-    @OneToMany
-    @JoinColumn(name = "master_id")
+    @ManyToMany(mappedBy = "masters",cascade = CascadeType.ALL)
     private Set<User> users;
 }
