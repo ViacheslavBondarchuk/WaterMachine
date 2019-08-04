@@ -15,7 +15,6 @@ import java.util.List;
 @Log4j2
 @Service
 public class CompanyService {
-
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
@@ -32,7 +31,9 @@ public class CompanyService {
     }
 
     public Company getOneCompany(long id) throws NotFoundException {
-        return companyRepository.findById(id).orElseThrow(() -> new NotFoundException("Company by " + id + "was not found"));
+        return companyRepository.findById(id)
+                .orElseThrow(
+                        () -> new NotFoundException("Company by " + id + "was not found"));
     }
 
     public void deleteCompany(long id) {

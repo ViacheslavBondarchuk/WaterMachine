@@ -23,7 +23,7 @@ public class MasterController {
 
     @GetMapping("/{id}")
     public Master getMasterById(@PathVariable long id) {
-        return masterService.getMasterByIdAndCompanyId(id);
+        return masterService.getMasterById(id);
     }
 
     @GetMapping

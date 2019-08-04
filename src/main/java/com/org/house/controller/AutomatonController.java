@@ -37,7 +37,8 @@ public class AutomatonController {
     }
 
     @PatchMapping
-    public void updateAutomatoonById(@Validated(UpdateAutomaton.class) @RequestBody AutomatonDTO automaton) throws NotFoundException {
+    public void updateAutomatoonById(@Validated(UpdateAutomaton.class) @RequestBody AutomatonDTO automaton)
+            throws NotFoundException {
         automatonService.updateAutomaton(automaton);
 
     }

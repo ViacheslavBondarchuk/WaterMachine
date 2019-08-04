@@ -4,6 +4,7 @@ import com.org.house.dto.TransactionDTO;
 import com.org.house.model.Transaction;
 import com.org.house.service.TransactionService;
 import com.org.house.transfer.NewUser;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -18,19 +19,21 @@ public class TransactionController {
 
     @GetMapping
     @Secured("USER")
-    public Transaction getWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO) {
+    public Transaction getWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO)
+            throws NotFoundException {
         return transactionService.getWater(transactionDTO);
     }
 
     @PostMapping
     @Secured("ADMIN")
-    public Transaction addWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO) {
+    public Transaction addWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO)
+            throws NotFoundException {
         return transactionService.addWater(transactionDTO);
     }
 
     @GetMapping("/money")
     @Secured("ADMIN")
-    public Transaction moneyToZeroAll(@RequestBody Transaction transaction) {
+    public Transaction moneyToZeroAll(@RequestBody Transaction transaction) throws NotFoundException {
         return transactionService.moneyToZero(transaction);
     }
 

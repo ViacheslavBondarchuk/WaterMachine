@@ -1,14 +1,12 @@
 package com.org.house.service;
 
 import com.org.house.dto.UserDTO;
-import com.org.house.model.Authority;
-import com.org.house.model.Master;
-import com.org.house.model.Owner;
-import com.org.house.model.User;
+import com.org.house.model.*;
 import com.org.house.repository.MasterRepository;
 import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import com.org.house.security.SecurityInformation;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -25,15 +23,18 @@ import java.util.List;
 @Log4j2
 @Service
 public class UserService implements UserDetailsService {
+    private final QUser qUser = QUser.user;
     private UserRepository userRepository;
     private OwnerRepository ownerRepository;
     private MasterRepository masterRepository;
     private SecurityInformation securityInformation;
     private ModelMapper modelMapper = new ModelMapper();
+    private JPAQueryFactory query;
 
     @Autowired
-    public UserService(UserRepository userRepository, OwnerRepository ownerRepository
+    public UserService(JPAQueryFactory query, UserRepository userRepository, OwnerRepository ownerRepository
             , MasterRepository masterRepository, SecurityInformation securityInformation) {
+        this.query = query;
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.masterRepository = masterRepository;
@@ -60,28 +61,30 @@ public class UserService implements UserDetailsService {
         log.debug("User was added");
     }
 
-    public void updateUser(UserDTO userDTO) {
-        User user = userRepository.findByIdAndCompanyId(userDTO.getId(), securityInformation.getUserCompanyId())
-                .orElseThrow(
-                        () -> new UsernameNotFoundException("User has been not found"));
+    public void updateUser(final UserDTO userDTO) {
+        User user = query.selectFrom(qUser).where(qUser.id.eq(userDTO.getId())
+                .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
 
-        if (!user.equals(null)) {
-            log.debug(String.format("User by %d has been updated", userDTO.getId()));
-            userRepository.save(modelMapper.map(userDTO, User.class));
+        if (user.equals(null)) {
+            throw new UsernameNotFoundException("User has been not found");
         }
+        log.debug("User has been updated");
+        userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
-    public User getUserById(long id) throws NotFoundException {
-        return userRepository.findByIdAndCompanyId(id, securityInformation.getUserCompanyId())
-                .orElseThrow(
-                        () -> new NotFoundException("User`s has beeb not found not found"));
+    public User getUserById(final long id) throws NotFoundException {
+        return query.selectFrom(qUser).where(qUser.id.eq(id)
+                .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
     }
 
     public List<User> getAllByCompanyId() {
         return userRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
-    public void deleteUserById(long id) {
+    public void deleteUserById(final long id) {
+        query.delete(qUser)
+                .where(qUser.id.eq(id).
+                        and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).execute();
         log.debug("User was deleted");
         userRepository.deleteById(id);
     }

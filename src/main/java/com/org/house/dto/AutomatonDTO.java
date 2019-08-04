@@ -16,7 +16,7 @@ import javax.validation.constraints.Null;
 public class AutomatonDTO {
     @Null(groups = {NewAutomaton.class})
     @NotNull(groups = {UpdateAutomaton.class})
-    private int id;
+    private long id;
     @NotBlank(groups = {NewAutomaton.class, UpdateAutomaton.class})
     private String tradeMark;
     @NotBlank(groups = {NewAutomaton.class, UpdateAutomaton.class})

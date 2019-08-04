@@ -2,7 +2,9 @@ package com.org.house.service;
 
 import com.org.house.dto.OwnerDTO;
 import com.org.house.model.Owner;
+import com.org.house.model.QOwner;
 import com.org.house.repository.OwnerRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
