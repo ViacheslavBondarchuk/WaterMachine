@@ -28,6 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     UserService userService;
 
     @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
@@ -44,26 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .anonymous().disable()
                 .authorizeRequests()
+                .antMatchers("/login", "/registration").permitAll()
                 .anyRequest().authenticated();
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(0);
-        return bean;
-    }
 }
