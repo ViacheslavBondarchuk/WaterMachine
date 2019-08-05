@@ -23,7 +23,7 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping("/registration")
     public void addUser(@Validated({NewUser.class, NewMaster.class
-            , NewOwner.class}) UserDTO userDTO) {
+            , NewOwner.class}) @RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
