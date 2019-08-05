@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,4 +22,7 @@ public class Owner {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company companiId;
+
+    @ManyToMany(mappedBy = "owners")
+    private Set<User> users;
 }

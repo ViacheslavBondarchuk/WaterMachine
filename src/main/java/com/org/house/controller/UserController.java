@@ -21,9 +21,9 @@ public class UserController {
     private UserService userService;
 
     @PreAuthorize("permitAll()")
-    @PostMapping
-    public void addUser(@Validated({NewOwner.class, NewMaster.class
-            , NewUser.class}) @RequestBody UserDTO userDTO) {
+    @PostMapping("/registration")
+    public void addUser(@Validated({NewUser.class, NewMaster.class
+            , NewOwner.class}) UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
