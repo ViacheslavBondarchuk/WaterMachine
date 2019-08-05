@@ -5,7 +5,6 @@ import com.org.house.model.Automaton;
 import com.org.house.model.QAutomaton;
 import com.org.house.repository.AutomatonRepository;
 import com.org.house.security.SecurityInformation;
-import com.querydsl.core.QueryFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @Service
@@ -58,7 +56,7 @@ public class AutomatonService {
         return automaton;
     }
 
-    public void deleteAutomaton(long id) throws NotFoundException {
+    public void deleteAutomaton(long id) {
         log.debug("Automaton was deleted");
         query.delete(qAutomaton).where(qAutomaton.id.eq(id)
                 .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).execute();
