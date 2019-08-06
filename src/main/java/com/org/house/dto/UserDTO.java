@@ -1,10 +1,14 @@
 package com.org.house.dto;
 
 import com.org.house.model.Authority;
+import com.org.house.model.Master;
+import com.org.house.model.Owner;
 import com.org.house.transfer.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -27,9 +31,7 @@ public class UserDTO {
     private String password;
     @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
             , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
-    private int company_id;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
-    private long master_id;
+    private long company_id;
 
     @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
     private boolean isOwner;
@@ -48,5 +50,11 @@ public class UserDTO {
     @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
     private boolean isCredentialsNonExpired;
 
+    @Valid
+    private OwnerDTO ownerDTO;
+    @Valid
+    private MasterDTO masterDTO;
+
     private Set<Authority> authorities;
+
 }

@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -13,15 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class Master {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long user_id;
 
     @Column(name = "company_id")
     private long companyId;
 
     private String firstName;
     private String lastName;
-
-    @ManyToMany(mappedBy = "masters",cascade = CascadeType.ALL)
-    private Set<User> users;
 }

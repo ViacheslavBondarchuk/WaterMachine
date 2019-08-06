@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
@@ -13,8 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Owner {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long user_id;
 
     private String firstName;
     private String lastName;
@@ -23,6 +21,4 @@ public class Owner {
     @JoinColumn(name = "company_id")
     private Company companiId;
 
-    @ManyToMany(mappedBy = "owners")
-    private Set<User> users;
 }

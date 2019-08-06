@@ -23,6 +23,7 @@ public class User implements UserDetails {
     private String password;
     private String username;
     private boolean isMaster;
+    private boolean isOwner;
     private boolean isEnabled;
     private boolean isAccountNonLocked;
     private boolean isAccountNonExpired;
@@ -35,16 +36,12 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private Set<Authority> authorities;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "owner_relations",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "owner_id", referencedColumnName = "id")})
-    private Set<Owner> owners;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private Owner owners;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "masters_relations",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "master_id", referencedColumnName = "id")})
-    private Set<Master> masters;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "master_id")
+    private Master masters;
 
 }
