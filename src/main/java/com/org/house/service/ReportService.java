@@ -43,7 +43,7 @@ public class ReportService {
         AutomatonState automatonState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(id)
                         .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (automatonState.equals(null)) {
+        if (automatonState == null) {
             throw new NotFoundException("Automatn has been not found");
         }
         return automatonState;

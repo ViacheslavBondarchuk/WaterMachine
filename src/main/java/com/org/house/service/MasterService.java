@@ -29,7 +29,7 @@ public class MasterService {
     public Master getMasterById(long id) {
         Master master = query.selectFrom(qMaster).where(qMaster.id.eq(id)
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (master.equals(null)) {
+        if (master == null) {
             throw new UsernameNotFoundException("Master has been not found");
         }
         return master;
@@ -46,7 +46,7 @@ public class MasterService {
     public void update(MasterDTO masterDTO) {
         Master master = query.selectFrom(qMaster).where(qMaster.id.eq(masterDTO.getId())
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (master.equals(null)) {
+        if (master == null) {
             throw new UsernameNotFoundException("Master has been not found");
         }
         log.debug("Master was updated");

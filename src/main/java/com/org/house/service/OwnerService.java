@@ -2,9 +2,7 @@ package com.org.house.service;
 
 import com.org.house.dto.OwnerDTO;
 import com.org.house.model.Owner;
-import com.org.house.model.QOwner;
 import com.org.house.repository.OwnerRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -26,8 +24,8 @@ public class OwnerService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("Owner by: %d has been not found", ownerDTO.getId())));
 
-        if (!owner.equals(null)) {
-            log.debug("Owner has benn updated");
+        if (owner != null) {
+            log.debug("Owner has been updated");
             ownerRepository.save(modelMapper.map(ownerDTO, Owner.class));
         }
     }

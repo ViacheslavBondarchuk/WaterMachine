@@ -83,7 +83,7 @@ public class TransactionService {
         AutomatonState lastState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
                         .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (!lastState.equals(null)) {
+        if (lastState != null) {
             currentState.setMoney(0);
             automatonStateRepository.save(currentState);
             log.debug(String.format("Transaction by %d automaton id was record", currentState.getAutomatonId()));
@@ -96,7 +96,7 @@ public class TransactionService {
         AutomatonState lasState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
                         .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (!lasState.equals(null)) {
+        if (lasState != null) {
             currentState.setWater(lasState.getWater() + currentState.getWater());
             currentState.setMoney(lasState.getMoney() + currentState.getMoney());
             automatonStateRepository.save(currentState);

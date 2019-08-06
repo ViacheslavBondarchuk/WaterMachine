@@ -7,7 +7,6 @@ import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import com.org.house.security.SecurityInformation;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,14 +64,14 @@ public class UserService implements UserDetailsService {
         User user = query.selectFrom(qUser).where(qUser.id.eq(userDTO.getId())
                 .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
 
-        if (user.equals(null)) {
+        if (user == null) {
             throw new UsernameNotFoundException("User has been not found");
         }
         log.debug("User has been updated");
         userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
-    public User getUserById(final long id) throws NotFoundException {
+    public User getUserById(final long id) {
         return query.selectFrom(qUser).where(qUser.id.eq(id)
                 .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
     }
@@ -83,10 +82,9 @@ public class UserService implements UserDetailsService {
 
     public void deleteUserById(final long id) {
         query.delete(qUser)
-                .where(qUser.id.eq(id).
-                        and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).execute();
+                .where(qUser.id.eq(id)
+                        .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).execute();
         log.debug("User was deleted");
-        userRepository.deleteById(id);
     }
 
 

@@ -39,7 +39,7 @@ public class AutomatonService {
         Automaton automaton = query.selectFrom(qAutomaton)
                 .where(qAutomaton.id.eq(automatonDTO.getId())
                         .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (automaton.equals(null)) {
+        if (automaton == null) {
             throw new UsernameNotFoundException("Automaton has been not found");
         }
         log.debug("Automaton has been updated");
@@ -50,7 +50,7 @@ public class AutomatonService {
     public Automaton getOneAutomaton(long id) throws NotFoundException {
         Automaton automaton = query.selectFrom(qAutomaton).where(qAutomaton.id.eq(id)
                 .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-        if (automaton.equals(null)) {
+        if (automaton == null) {
             throw new NotFoundException("Automaton has been not found");
         }
         return automaton;

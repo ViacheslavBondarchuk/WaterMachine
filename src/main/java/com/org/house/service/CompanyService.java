@@ -20,7 +20,7 @@ public class CompanyService {
     @Autowired
     private SecurityInformation securityInformation;
 
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapper();
 
     public Company addCompany(CompanyDTO companyDTO) {
         return companyRepository.save(modelMapper.map(companyDTO, Company.class));
