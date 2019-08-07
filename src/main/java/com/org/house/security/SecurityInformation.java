@@ -7,23 +7,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-@Component
 public final class SecurityInformation {
 
     @Autowired
     private static UserRepository userRepository;
 
-    private UserDetails securityContextHolder() {
+    private static UserDetails securityContextHolder() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
     }
 
 
-    private String usernameFromContext() {
+    private static String usernameFromContext() {
         return securityContextHolder().getUsername();
     }
 
 
-    public final long getUserCompanyId() {
+    public static final long getUserCompanyId() {
         return userRepository.findByUsername(usernameFromContext())
                 .orElseThrow(() -> new UsernameNotFoundException("User has been not found")).getCompanyId();
     }

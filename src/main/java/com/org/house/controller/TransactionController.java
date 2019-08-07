@@ -3,10 +3,9 @@ package com.org.house.controller;
 import com.org.house.dto.TransactionDTO;
 import com.org.house.model.Transaction;
 import com.org.house.service.TransactionService;
-import com.org.house.transfer.NewUser;
+import com.org.house.transfer.NewTransaction;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +17,20 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping
-    @Secured("USER")
-    public Transaction getWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO)
+    public Transaction getWater(@Validated(NewTransaction.class) @RequestBody TransactionDTO transactionDTO)
             throws NotFoundException {
-        return transactionService.getWater(transactionDTO);
+        return transactionService.transactions(transactionDTO);
     }
 
     @PostMapping
-    @Secured("ADMIN")
-    public Transaction addWater(@Validated(NewUser.class) @RequestBody TransactionDTO transactionDTO)
+    public void addWater(@Validated(NewTransaction.class) @RequestBody TransactionDTO transactionDTO)
             throws NotFoundException {
-        return transactionService.addWater(transactionDTO);
+        transactionService.transactions(transactionDTO);
     }
 
-    @GetMapping("/money")
-    @Secured("ADMIN")
-    public Transaction moneyToZeroAll(@RequestBody Transaction transaction) throws NotFoundException {
-        return transactionService.moneyToZero(transaction);
+    public Transaction incasationMoney(@Validated(NewTransaction.class) @RequestBody TransactionDTO transactionDTO)
+            throws NotFoundException {
+        return transactionService.transactions(transactionDTO);
     }
 
 }

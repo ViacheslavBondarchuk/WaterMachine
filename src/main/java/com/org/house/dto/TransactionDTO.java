@@ -1,7 +1,7 @@
 package com.org.house.dto;
 
-import com.org.house.transfer.NewUser;
-import com.org.house.transfer.UpdateUser;
+import com.org.house.model.TransactionType;
+import com.org.house.transfer.NewTransaction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,22 +12,31 @@ import java.util.Date;
 @Getter
 @Setter
 public class TransactionDTO {
-
-    @Null(groups = {NewUser.class})
+    @Null(groups = {NewTransaction.class})
     private long id;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private long accountId;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private long automaticId;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private long companyId;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private double cost;
-    @Null(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private Date date;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
     private double quantityWater;
-    @NotBlank(groups = {NewUser.class, UpdateUser.class})
-    private boolean getMoney;
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    private TransactionType type;
+
+    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    private boolean perCard;
 
 }

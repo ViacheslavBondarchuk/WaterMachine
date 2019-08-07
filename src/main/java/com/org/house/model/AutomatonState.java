@@ -1,5 +1,7 @@
 package com.org.house.model;
 
+import com.org.house.dto.TransactionDTO;
+import com.org.house.security.SecurityInformation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,16 @@ public class AutomatonState {
     private double water;
     @Column(name = "company_id")
     private long companyId;
+
+    public final static AutomatonState buildAutomatonState(TransactionDTO transactionDTO) {
+        return new AutomatonState().builder()
+                .automatonId(transactionDTO.getAutomaticId())
+                .companyId(SecurityInformation.getUserCompanyId())
+                .water(transactionDTO.getQuantityWater())
+                .money(transactionDTO.getCost())
+                .build();
+
+    }
 
 
 }

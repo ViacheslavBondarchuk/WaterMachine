@@ -1,18 +1,11 @@
 package com.org.house.model;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -33,6 +26,8 @@ public class Transaction {
     private Date date;
     @Column(name = "quantity_water")
     private double quantityWater;
-    @Column(name = "get_money")
-    private boolean getMoney;
+    @Column(name = "per_card")
+    private boolean perCard;
+    @Column(name = "transaction_type")
+    private TransactionType type;
 }
