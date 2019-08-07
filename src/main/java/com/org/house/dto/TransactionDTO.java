@@ -15,28 +15,28 @@ public class TransactionDTO {
     @Null(groups = {NewTransaction.class})
     private long id;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = NewTransaction.class)
     private long accountId;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private long automaticId;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private long companyId;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private double cost;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private Date date;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private double quantityWater;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
+    @NotBlank(groups = {NewTransaction.class})
     private TransactionType type;
 
-    @NotBlank(groups = {NewTransaction.class, UpdateTransaction.class})
-    private boolean perCard;
+    @NotBlank(groups = {NewTransaction.class})
+    private boolean byCard;
 
 }

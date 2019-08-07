@@ -28,6 +28,7 @@ public class TransactionController {
         transactionService.transactions(transactionDTO);
     }
 
+    @PutMapping
     public Transaction incasationMoney(@Validated(NewTransaction.class) @RequestBody TransactionDTO transactionDTO)
             throws NotFoundException {
         return transactionService.transactions(transactionDTO);
