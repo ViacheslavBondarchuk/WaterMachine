@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,4 +20,8 @@ public class Master {
 
     private String firstName;
     private String lastName;
+
+    @OneToMany
+    @JoinColumn(name = "master_id")
+    private Set<Automaton> automatonSet;
 }
