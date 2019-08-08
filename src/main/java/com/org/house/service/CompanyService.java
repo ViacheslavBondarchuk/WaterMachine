@@ -5,14 +5,12 @@ import com.org.house.model.Company;
 import com.org.house.repository.CompanyRepository;
 import com.org.house.security.SecurityInformation;
 import javassist.NotFoundException;
-import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Log4j2
 @Service
 public class CompanyService {
     @Autowired

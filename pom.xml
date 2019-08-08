@@ -117,6 +117,12 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${query-dsl.version}</version>
         </dependency>
+        <!--AOP-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>2.1.7.RELEASE</version>
+        </dependency>
         <!--H2-->
         <dependency>
             <groupId>com.h2database</groupId>

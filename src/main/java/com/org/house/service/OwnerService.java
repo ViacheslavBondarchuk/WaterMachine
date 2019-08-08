@@ -4,7 +4,6 @@ import com.org.house.dto.OwnerDTO;
 import com.org.house.model.Owner;
 import com.org.house.repository.OwnerRepository;
 import javassist.NotFoundException;
-import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Log4j2
 @Service
 public class OwnerService {
     @Autowired
@@ -25,7 +23,6 @@ public class OwnerService {
                         String.format("Owner by: %d has been not found", ownerDTO.getId())));
 
         if (owner != null) {
-            log.debug("Owner has been updated");
             ownerRepository.save(modelMapper.map(ownerDTO, Owner.class));
         }
     }
@@ -40,7 +37,6 @@ public class OwnerService {
     }
 
     public void deleteById(long id) {
-        log.debug(String.format("Owner by %d has been deleted", id));
         ownerRepository.deleteById(id);
     }
 }

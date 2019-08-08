@@ -6,7 +6,6 @@ import com.org.house.model.QMaster;
 import com.org.house.repository.MasterRepository;
 import com.org.house.security.SecurityInformation;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Log4j2
 @Service
 public class MasterService {
     private final QMaster qMaster = QMaster.master;
@@ -47,7 +45,6 @@ public class MasterService {
         Master master = query.selectFrom(qMaster).where(qMaster.user_id.eq(masterDTO.getId())
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (master == null) {
-            log.debug("Master was updated");
             masterRepository.save(modelMapper.map(masterDTO, Master.class));
         } else {
             throw new UsernameNotFoundException("Master has been not found");
@@ -56,7 +53,6 @@ public class MasterService {
     }
 
     public void delete(long id) {
-        log.debug("Master has been deleted");
         query.delete(qMaster).where(qMaster.user_id.eq(id)
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).execute();
     }

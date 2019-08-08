@@ -14,6 +14,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@Secured("ADMIN,MASTER")
+@Secured("ADMIN")
 @RequestMapping("/automatons")
 public class AutomatonController {
 
@@ -31,6 +32,12 @@ public class AutomatonController {
     @PostMapping
     public void addAutomaton(@Validated(NewAutomaton.class) @RequestBody AutomatonDTO automatonDTO) {
         automatonService.addAutomaton(automatonDTO);
+    }
+
+    @Secured("MASTER")
+    @GetMapping("/masters/{id}")
+    public List<Automaton> getMasterAutomaton(@PathVariable long id) {
+        return automatonService.getMasterAutomaton(id);
     }
 
     @GetMapping

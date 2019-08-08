@@ -7,7 +7,6 @@ import com.org.house.model.Transaction;
 import com.org.house.repository.AutomatonStateRepository;
 import com.org.house.repository.TransactionRepository;
 import com.org.house.security.SecurityInformation;
-import com.querydsl.core.ResultTransformer;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
