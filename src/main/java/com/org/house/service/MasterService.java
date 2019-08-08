@@ -47,10 +47,12 @@ public class MasterService {
         Master master = query.selectFrom(qMaster).where(qMaster.user_id.eq(masterDTO.getId())
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (master == null) {
+            log.debug("Master was updated");
+            masterRepository.save(modelMapper.map(masterDTO, Master.class));
+        } else {
             throw new UsernameNotFoundException("Master has been not found");
         }
-        log.debug("Master was updated");
-        masterRepository.save(modelMapper.map(masterDTO, Master.class));
+
     }
 
     public void delete(long id) {
