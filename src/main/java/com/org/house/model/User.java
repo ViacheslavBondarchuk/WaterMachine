@@ -20,8 +20,9 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "company_id")
     private long companyId;
-    private String password;
+    @Column(unique = true)
     private String username;
+    private String password;
     private boolean isMaster;
     private boolean isOwner;
     private boolean isEnabled;

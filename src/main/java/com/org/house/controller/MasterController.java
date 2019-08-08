@@ -29,7 +29,7 @@ public class MasterController {
     }
 
     @GetMapping
-    public List<Master> getAllMasterByCompanyId(@RequestParam long id,@AuthenticationPrincipal Principal principal) {
+    public List<Master> getAllMasterByCompanyId(@RequestParam long id) {
         return masterService.getAllMasterByCompanyId(id);
     }
 

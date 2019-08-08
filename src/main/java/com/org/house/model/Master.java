@@ -18,6 +18,7 @@ public class Master {
     @Column(name = "company_id")
     private long companyId;
 
+    private String username;
     private String firstName;
     private String lastName;
 

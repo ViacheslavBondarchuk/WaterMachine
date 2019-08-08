@@ -79,7 +79,7 @@ public class TransactionService {
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
                         .and(qAutomatonState.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
         if (lastState != null) {
-            currentState.setMoney(currentState.getMoney() + currentState.getMoney());
+            currentState.setMoney(lastState.getMoney() + currentState.getMoney());
             currentState.setWater(lastState.getWater() + currentState.getWater());
 
             log.warn("Automaton state was updated");

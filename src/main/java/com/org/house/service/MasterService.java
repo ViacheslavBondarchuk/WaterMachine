@@ -27,7 +27,7 @@ public class MasterService {
     private JPAQueryFactory query;
 
     public Master getMasterById(long id) {
-        Master master = query.selectFrom(qMaster).where(qMaster.id.eq(id)
+        Master master = query.selectFrom(qMaster).where(qMaster.user_id.eq(id)
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (master == null) {
             throw new UsernameNotFoundException("Master has been not found");
@@ -44,7 +44,7 @@ public class MasterService {
 
 
     public void update(MasterDTO masterDTO) {
-        Master master = query.selectFrom(qMaster).where(qMaster.id.eq(masterDTO.getId())
+        Master master = query.selectFrom(qMaster).where(qMaster.user_id.eq(masterDTO.getId())
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (master == null) {
             throw new UsernameNotFoundException("Master has been not found");
@@ -55,7 +55,7 @@ public class MasterService {
 
     public void delete(long id) {
         log.debug("Master has been deleted");
-        query.delete(qMaster).where(qMaster.id.eq(id)
+        query.delete(qMaster).where(qMaster.user_id.eq(id)
                 .and(qMaster.companyId.eq(securityInformation.getUserCompanyId()))).execute();
     }
 }
