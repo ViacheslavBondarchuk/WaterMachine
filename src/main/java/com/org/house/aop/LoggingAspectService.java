@@ -2,7 +2,9 @@ package com.org.house.aop;
 
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -22,20 +24,6 @@ public class LoggingAspectService {
         log.info("Method {} finished | args=> {}"
                 , joinPoint.getSignature().toShortString(), Arrays.asList(joinPoint.getArgs()));
 
-    }
-
-    @AfterReturning(value = "logging()", returning = "result")
-    private void logAfterReturn(JoinPoint joinPoint, Object result) {
-        log.info("Class: " + joinPoint.getSignature().getDeclaringTypeName());
-        log.info("Method {} returned result: {}"
-                , joinPoint.getSignature().toShortString(), result.toString());
-
-    }
-
-    @AfterThrowing(value = "logging()", throwing = "e")
-    private void logAfterThrowing(JoinPoint joinPoint, Exception e) {
-        log.warn("Class: " + joinPoint.getSignature().getDeclaringTypeName());
-        log.warn("Method {} was caught exception: {}", joinPoint.getSignature().toShortString(), e);
     }
 
 }

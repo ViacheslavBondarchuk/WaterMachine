@@ -31,10 +31,8 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
 
     @Enumerated(EnumType.STRING)
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "authority_relations ",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "user_id"))
+    @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 
     @OneToOne(cascade = CascadeType.ALL)

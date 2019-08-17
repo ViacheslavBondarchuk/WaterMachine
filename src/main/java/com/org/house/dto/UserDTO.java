@@ -1,12 +1,9 @@
 package com.org.house.dto;
 
 import com.org.house.model.Authority;
-import com.org.house.model.Master;
-import com.org.house.model.Owner;
 import com.org.house.transfer.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

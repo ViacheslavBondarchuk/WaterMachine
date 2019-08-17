@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.List;
 
@@ -80,6 +81,25 @@ public class UserService implements UserDetailsService {
                         .and(qUser.companyId.eq(SecurityInformation.getUserCompanyId()))).execute();
     }
 
+
+    @PostConstruct
+    public void commandLineRunner(){
+        User user = new User();
+        user.setUsername("user");
+        user.setPassword(new BCryptPasswordEncoder().encode("user"));
+        user.setCompanyId(1);
+        user.setEmail("slava.777.bondarchuk@outlook.com");
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setAuthorities(Collections.singleton(Authority.ADMIN));
+        user.setMaster(false);
+        user.setOwner(false);
+        user.setEnabled(true);
+
+
+        userRepository.saveAndFlush(user);
+    }
 
     //    Method from interface'UserDetailsService'
     @Override
