@@ -26,15 +26,17 @@ public class UserService implements UserDetailsService {
     private OwnerRepository ownerRepository;
     private MasterRepository masterRepository;
     private ModelMapper modelMapper = new ModelMapper();
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private JPAQueryFactory query;
 
     @Autowired
     public UserService(JPAQueryFactory query, UserRepository userRepository, OwnerRepository ownerRepository
-            , MasterRepository masterRepository) {
+            , MasterRepository masterRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.query = query;
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.masterRepository = masterRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void addUser(UserDTO userDTO) {
@@ -83,7 +85,7 @@ public class UserService implements UserDetailsService {
 
 
     @PostConstruct
-    public void commandLineRunner(){
+    public void commandLineRunner() {
         User user = new User();
         user.setUsername("user");
         user.setPassword(new BCryptPasswordEncoder().encode("user"));
@@ -105,8 +107,8 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("User by %s has been not found", username)));
+                .orElseThrow(() -> new UsernameNotFoundException("user has been not found"));
+
     }
 
 }

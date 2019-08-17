@@ -2,27 +2,17 @@ package com.org.house.controller;
 
 import com.org.house.dto.AutomatonDTO;
 import com.org.house.model.Automaton;
-import com.org.house.model.Master;
-import com.org.house.model.QMaster;
-import com.org.house.security.SecurityInformation;
 import com.org.house.service.AutomatonService;
 import com.org.house.transfer.NewAutomaton;
 import com.org.house.transfer.UpdateAutomaton;
-import com.querydsl.core.QueryFactory;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
-@Secured("ADMIN")
 @RequestMapping("/automatons")
 public class AutomatonController {
 
@@ -34,7 +24,6 @@ public class AutomatonController {
         automatonService.addAutomaton(automatonDTO);
     }
 
-    @Secured("MASTER")
     @GetMapping("/masters/{id}")
     public List<Automaton> getMasterAutomaton(@PathVariable long id) {
         return automatonService.getMasterAutomaton(id);

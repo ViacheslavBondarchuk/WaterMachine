@@ -1,23 +1,19 @@
 package com.org.house.controller;
 
-import java.util.List;
-
-import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import com.org.house.dto.CompanyDTO;
 import com.org.house.model.Company;
 import com.org.house.service.CompanyService;
 import com.org.house.transfer.NewUser;
 import com.org.house.transfer.UpdateUser;
+import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
-@Secured("ADMIN,OWNER")
 @RequestMapping("/companies")
 public class CompanyController {
 
@@ -41,8 +37,8 @@ public class CompanyController {
     }
 
     @PatchMapping
-    public void updateCompany(@Validated(UpdateUser.class) @RequestBody CompanyDTO companyDTO) {
-//        companyService.updateCompany(companyDTO);
+    public void updateCompany(@Validated(UpdateUser.class) @RequestBody CompanyDTO companyDTO) throws NotFoundException {
+        companyService.updateCompany(companyDTO);
     }
 
     @DeleteMapping("/{id}")
