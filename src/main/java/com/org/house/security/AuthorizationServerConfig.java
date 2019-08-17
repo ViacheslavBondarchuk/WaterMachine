@@ -35,14 +35,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private UserService userService;
     private AuthenticationManager authenticationManager;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AuthorizationServerConfig(UserService userService, AuthenticationManager authenticationManager
-            , BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthorizationServerConfig(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 

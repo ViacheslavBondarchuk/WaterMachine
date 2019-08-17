@@ -26,17 +26,17 @@ public class UserService implements UserDetailsService {
     private OwnerRepository ownerRepository;
     private MasterRepository masterRepository;
     private ModelMapper modelMapper = new ModelMapper();
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private JPAQueryFactory query;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(JPAQueryFactory query, UserRepository userRepository, OwnerRepository ownerRepository
-            , MasterRepository masterRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+            , MasterRepository masterRepository) {
         this.query = query;
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.masterRepository = masterRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void addUser(UserDTO userDTO) {
@@ -100,7 +100,7 @@ public class UserService implements UserDetailsService {
         user.setEnabled(true);
 
 
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     //    Method from interface'UserDetailsService'
