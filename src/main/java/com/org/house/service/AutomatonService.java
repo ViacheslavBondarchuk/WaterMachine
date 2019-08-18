@@ -18,22 +18,25 @@ public class AutomatonService {
     private final QAutomaton qAutomaton = QAutomaton.automaton;
     @Autowired
     private AutomatonRepository automatonRepository;
-    private ModelMapper modelMapper = new ModelMapper();
     @Autowired
     private JPAQueryFactory query;
+    @Autowired
+    private SecurityInformation securityInformation;
+    private ModelMapper modelMapper = new ModelMapper();
+
 
     public void addAutomaton(AutomatonDTO automatonDTO) {
         automatonRepository.save(modelMapper.map(automatonDTO, Automaton.class));
     }
 
     public List<Automaton> getAllAutomaton() {
-        return automatonRepository.findByCompanyId(SecurityInformation.getUserCompanyId());
+        return automatonRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
     public void updateAutomaton(AutomatonDTO automatonDTO) {
         Automaton automaton = query.selectFrom(qAutomaton)
                 .where(qAutomaton.id.eq(automatonDTO.getId())
-                        .and(qAutomaton.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                        .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (automaton != null) {
             automatonRepository.save(modelMapper.map(automatonDTO, Automaton.class));
         } else {
@@ -43,17 +46,17 @@ public class AutomatonService {
 
     public Automaton getOneAutomaton(long id) {
         return query.selectFrom(qAutomaton).where(qAutomaton.id.eq(id)
-                .and(qAutomaton.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
 
     }
 
     public void deleteAutomaton(long id) {
         query.delete(qAutomaton).where(qAutomaton.id.eq(id)
-                .and(qAutomaton.companyId.eq(SecurityInformation.getUserCompanyId()))).execute();
+                .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).execute();
     }
 
     public List<Automaton> getMasterAutomaton(long id) {
         return query.selectFrom(qAutomaton).where(qAutomaton.masterId.eq(id)
-                .and(qAutomaton.companyId.eq(SecurityInformation.getUserCompanyId()))).fetch();
+                .and(qAutomaton.companyId.eq(securityInformation.getUserCompanyId()))).fetch();
     }
 }

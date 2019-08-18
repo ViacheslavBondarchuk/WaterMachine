@@ -24,6 +24,8 @@ public class TransactionService {
     private AutomatonStateRepository automatonStateRepository;
     private ModelMapper modelMapper = new ModelMapper();
     private QAutomatonState qAutomatonState = QAutomatonState.automatonState;
+    @Autowired
+    private SecurityInformation securityInformation;
 
     @Autowired
     public TransactionService(JPAQueryFactory query, TransactionRepository transactionRepository
@@ -57,7 +59,7 @@ public class TransactionService {
         AutomatonState currentState = AutomatonState.buildAutomatonState(transactionDTO);
         AutomatonState lastState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
-                        .and(qAutomatonState.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                        .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (lastState != null) {
             currentState.setMoney(lastState.getMoney());
             currentState.setWater(lastState.getWater() + currentState.getWater());
@@ -76,7 +78,7 @@ public class TransactionService {
         AutomatonState currentState = AutomatonState.buildAutomatonState(transactionDTO);
         AutomatonState lastState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
-                        .and(qAutomatonState.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                        .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (lastState != null) {
             currentState.setMoney(lastState.getMoney() + currentState.getMoney());
             currentState.setWater(lastState.getWater() + currentState.getWater());
@@ -94,7 +96,7 @@ public class TransactionService {
         AutomatonState currentState = AutomatonState.buildAutomatonState(transactionDTO);
         AutomatonState lastState = query.selectFrom(qAutomatonState)
                 .where(qAutomatonState.automatonId.eq(currentState.getAutomatonId())
-                        .and(qAutomatonState.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                        .and(qAutomatonState.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
         if (lastState != null) {
             currentState.setMoney(0);
             currentState.setWater(lastState.getWater());

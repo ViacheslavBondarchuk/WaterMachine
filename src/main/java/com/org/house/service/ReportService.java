@@ -20,18 +20,17 @@ public class ReportService {
     private JPAQueryFactory query;
     private AutomatonStateRepository automatonStateRepository;
     private TransactionRepository transactionRepository;
-    private SecurityInformation securityInformation;
-
     private QTransaction qTransaction;
     private QAutomatonState qAutomatonState;
+    @Autowired
+    private SecurityInformation securityInformation;
 
     @Autowired
     public ReportService(JPAQueryFactory query, AutomatonStateRepository automatonStateRepository
-            , TransactionRepository transactionRepository, SecurityInformation securityInformation) {
+            , TransactionRepository transactionRepository) {
         this.query = query;
         this.automatonStateRepository = automatonStateRepository;
         this.transactionRepository = transactionRepository;
-        this.securityInformation = securityInformation;
     }
 
     public List<AutomatonState> getReportAutomatons() {

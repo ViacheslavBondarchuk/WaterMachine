@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +29,10 @@ public class AutomatonState {
     private long companyId;
 
     public final static AutomatonState buildAutomatonState(TransactionDTO transactionDTO) {
+        SecurityInformation securityInformation;
         return new AutomatonState().builder()
                 .automatonId(transactionDTO.getAutomaticId())
-                .companyId(SecurityInformation.getUserCompanyId())
+                .companyId(transactionDTO.getCompanyId())
                 .water(transactionDTO.getQuantityWater())
                 .money(transactionDTO.getCost())
                 .build();

@@ -18,7 +18,6 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-
     private CompanyService companyService;
 
     @PostMapping

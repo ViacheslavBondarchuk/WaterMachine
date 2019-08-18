@@ -19,10 +19,10 @@ public class MasterService {
     @Autowired
     private MasterRepository masterRepository;
     @Autowired
+    private JPAQueryFactory query;
+    @Autowired
     private SecurityInformation securityInformation;
     private ModelMapper modelMapper = new ModelMapper();
-    @Autowired
-    private JPAQueryFactory query;
 
     public Master getMasterById(long id) {
         Master master = query.selectFrom(qMaster).where(qMaster.user_id.eq(id)

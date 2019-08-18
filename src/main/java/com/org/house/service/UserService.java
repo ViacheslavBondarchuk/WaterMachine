@@ -29,6 +29,8 @@ public class UserService implements UserDetailsService {
     private JPAQueryFactory query;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private SecurityInformation securityInformation;
 
     @Autowired
     public UserService(JPAQueryFactory query, UserRepository userRepository, OwnerRepository ownerRepository
@@ -60,7 +62,7 @@ public class UserService implements UserDetailsService {
 
     public void updateUser(final UserDTO userDTO) {
         User user = query.selectFrom(qUser).where(qUser.id.eq(userDTO.getId())
-                .and(qUser.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
 
         if (user == null) {
             throw new UsernameNotFoundException("User has been not found");
@@ -70,25 +72,25 @@ public class UserService implements UserDetailsService {
 
     public User getUserById(final long id) {
         return query.selectFrom(qUser).where(qUser.id.eq(id)
-                .and(qUser.companyId.eq(SecurityInformation.getUserCompanyId()))).fetchOne();
+                .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
     }
 
     public List<User> getAllByCompanyId() {
-        return userRepository.findByCompanyId(SecurityInformation.getUserCompanyId());
+        return userRepository.findByCompanyId(securityInformation.getUserCompanyId());
     }
 
     public void deleteUserById(final long id) {
         query.delete(qUser)
                 .where(qUser.id.eq(id)
-                        .and(qUser.companyId.eq(SecurityInformation.getUserCompanyId()))).execute();
+                        .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).execute();
     }
 
 
     @PostConstruct
     public void commandLineRunner() {
         User user = new User();
-        user.setUsername("user");
-        user.setPassword(new BCryptPasswordEncoder().encode("user"));
+        user.setUsername("admin");
+        user.setPassword(new BCryptPasswordEncoder().encode("admin"));
         user.setCompanyId(1);
         user.setEmail("slava.777.bondarchuk@outlook.com");
         user.setAccountNonExpired(true);
