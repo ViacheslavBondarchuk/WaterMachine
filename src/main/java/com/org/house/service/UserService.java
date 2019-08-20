@@ -50,9 +50,11 @@ public class UserService implements UserDetailsService {
         userDTO.setAuthorities(Collections.singleton(Authority.USER));
 
         if (userDTO.isOwner()) {
+            userDTO.getAuthorities().add(Authority.OWNER);
             ownerRepository.save(modelMapper.map(userDTO, Owner.class));
             userRepository.save(modelMapper.map(userDTO, User.class));
         } else if (userDTO.isMaster()) {
+            userDTO.getAuthorities().add(Authority.MASTER);
             masterRepository.save(modelMapper.map(userDTO, Master.class));
             userRepository.save(modelMapper.map(userDTO, User.class));
         } else {

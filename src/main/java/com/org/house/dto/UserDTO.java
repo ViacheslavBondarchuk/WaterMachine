@@ -3,11 +3,12 @@ package com.org.house.dto;
 import com.org.house.model.Authority;
 import com.org.house.model.Master;
 import com.org.house.model.Owner;
-import com.org.house.transfer.*;
+import com.org.house.transfer.NewUser;
+import com.org.house.transfer.UpdateMaster;
+import com.org.house.transfer.UpdateUser;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
