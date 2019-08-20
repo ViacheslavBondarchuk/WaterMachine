@@ -8,9 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -21,12 +19,19 @@ public class AutomatonState {
     @Id
     @Column(name = "automaton_id")
     private long automatonId;
+
     @Column(name = "quantity_money")
     private double money;
+
     @Column(name = "quantity_water")
     private double water;
+
     @Column(name = "company_id")
     private long companyId;
+
+    @OneToOne
+    @JoinColumn(name = "automaton_id")
+    private Automaton automaton;
 
     public final static AutomatonState buildAutomatonState(TransactionDTO transactionDTO) {
         SecurityInformation securityInformation;

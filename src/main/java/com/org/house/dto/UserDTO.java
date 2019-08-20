@@ -1,6 +1,8 @@
 package com.org.house.dto;
 
 import com.org.house.model.Authority;
+import com.org.house.model.Master;
+import com.org.house.model.Owner;
 import com.org.house.transfer.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,44 +16,46 @@ import java.util.Set;
 @Getter
 @Setter
 public class UserDTO {
-    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
-    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateMaster.class)
     private long id;
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
-    private String username;
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
-    private String email;
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
-    private String password;
-    @NotBlank(groups = {NewUser.class, NewOwner.class, NewMaster.class
-            , UpdateUser.class, UpdateMaster.class, UpdateOwner.class})
-    private long company_id;
 
-    @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
-    private boolean isOwner;
-    @NotBlank(groups = {NewMaster.class, UpdateMaster.class})
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+    private String email;
+
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateUser.class)
+    private long companyId;
+
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+    private String username;
+
+    @NotBlank(groups = {NewUser.class, UpdateUser.class})
+    private String password;
+
+    @Null(groups = {NewUser.class, UpdateUser.class})
     private boolean isMaster;
-    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
-    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
+    @Null(groups = {NewUser.class, UpdateUser.class})
+    private boolean isOwner;
+
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateUser.class)
     private boolean isEnabled;
-    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
-    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
+
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateUser.class)
     private boolean isAccountNonLocked;
-    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
-    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
+
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateUser.class)
     private boolean isAccountNonExpired;
-    @Null(groups = {NewUser.class, NewOwner.class, NewMaster.class})
-    @NotNull(groups = {UpdateUser.class, UpdateOwner.class, UpdateMaster.class})
+
+    @Null(groups = NewUser.class)
+    @NotNull(groups = UpdateUser.class)
     private boolean isCredentialsNonExpired;
 
-    @Valid
-    private OwnerDTO ownerDTO;
-    @Valid
-    private MasterDTO masterDTO;
 
     private Set<Authority> authorities;
-
+    private Owner owners;
+    private Master masters;
 }

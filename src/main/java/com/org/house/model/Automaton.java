@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Automaton {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
 	@Column(name = "company_id")
@@ -23,10 +23,5 @@ public class Automaton {
 
 	@Column(name = "master_id")
 	private long masterId;
-
-	@OneToOne
-	@JoinColumn(name = "automatonState_id")
-	private AutomatonState automatonState;
-
 
 }

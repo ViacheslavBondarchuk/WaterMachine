@@ -6,6 +6,6 @@ public enum TransactionType {
 
     @Override
     public String toString() {
-        return super.toString();
+        return name();
     }
 }
