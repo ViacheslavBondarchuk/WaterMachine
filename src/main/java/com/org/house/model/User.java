@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "company_id")
     private long companyId;
-    @Column(unique = true)
+    @Column(unique = true, length = 50)
     private String username;
     private String password;
     private boolean isMaster;
