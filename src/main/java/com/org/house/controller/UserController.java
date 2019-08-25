@@ -18,14 +18,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void addUser(@Validated({NewUser.class, NewMaster.class
-            , NewOwner.class}) @RequestBody UserDTO userDTO) {
+    public void addUser(@Validated(NewUser.class) @RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
     @PatchMapping
-    public void updateUser(@Validated({UpdateUser.class, UpdateMaster.class
-            , UpdateOwner.class}) @RequestBody UserDTO userDTO) {
+    public void updateUser(@Validated(UpdateUser.class) @RequestBody UserDTO userDTO) {
         userService.updateUser(userDTO);
     }
 

@@ -1,13 +1,16 @@
 package com.org.house.service;
 
 import com.org.house.dto.UserDTO;
-import com.org.house.model.*;
+import com.org.house.model.Authority;
+import com.org.house.model.QUser;
+import com.org.house.model.User;
+import com.org.house.model.UserType;
 import com.org.house.repository.MasterRepository;
 import com.org.house.repository.OwnerRepository;
 import com.org.house.repository.UserRepository;
 import com.org.house.security.SecurityInformation;
+import com.org.house.util.UserUtil;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,12 +28,11 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private OwnerRepository ownerRepository;
     private MasterRepository masterRepository;
-    private ModelMapper modelMapper = new ModelMapper();
     private JPAQueryFactory query;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
     private SecurityInformation securityInformation;
+    @Autowired
+    private UserUtil userUtil;
 
     @Autowired
     public UserService(JPAQueryFactory query, UserRepository userRepository, OwnerRepository ownerRepository
@@ -42,34 +44,11 @@ public class UserService implements UserDetailsService {
     }
 
     public void addUser(UserDTO userDTO) {
-        userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
-        userDTO.setEnabled(true);
-        userDTO.setAccountNonLocked(true);
-        userDTO.setAccountNonExpired(true);
-        userDTO.setCredentialsNonExpired(true);
-        userDTO.setAuthorities(Collections.singleton(Authority.USER));
-
-        if (userDTO.isOwner()) {
-            userDTO.getAuthorities().add(Authority.OWNER);
-            ownerRepository.save(modelMapper.map(userDTO, Owner.class));
-            userRepository.save(modelMapper.map(userDTO, User.class));
-        } else if (userDTO.isMaster()) {
-            userDTO.getAuthorities().add(Authority.MASTER);
-            masterRepository.save(modelMapper.map(userDTO, Master.class));
-            userRepository.save(modelMapper.map(userDTO, User.class));
-        } else {
-            userRepository.save(modelMapper.map(userDTO, User.class));
-        }
+        userRepository.save(userUtil.getUser(userDTO));
     }
 
     public void updateUser(final UserDTO userDTO) {
-        User user = query.selectFrom(qUser).where(qUser.id.eq(userDTO.getId())
-                .and(qUser.companyId.eq(securityInformation.getUserCompanyId()))).fetchOne();
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User has been not found");
-        }
-        userRepository.save(modelMapper.map(userDTO, User.class));
+        userRepository.save(userUtil.getUser(userDTO));
     }
 
     public User getUserById(final long id) {
@@ -97,17 +76,14 @@ public class UserService implements UserDetailsService {
         user.setEmail("slava.777.bondarchuk@outlook.com");
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
+        user.setType(UserType.USER);
         user.setCredentialsNonExpired(true);
         user.setAuthorities(Collections.singleton(Authority.ADMIN));
-        user.setMaster(false);
-        user.setOwner(false);
         user.setEnabled(true);
-
 
         userRepository.save(user);
     }
 
-    //    Method from interface'UserDetailsService'
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)

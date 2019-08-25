@@ -4,12 +4,14 @@ import com.org.house.transfer.NewAutomaton;
 import com.org.house.transfer.UpdateAutomaton;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AutomatonDTO {
     @Null(groups = {NewAutomaton.class})
     @NotNull(groups = {UpdateAutomaton.class})

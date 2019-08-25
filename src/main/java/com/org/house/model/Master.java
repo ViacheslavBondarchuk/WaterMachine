@@ -1,6 +1,7 @@
 package com.org.house.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Master {
@@ -19,10 +21,13 @@ public class Master {
     private long companyId;
 
     private String username;
+    @Column(name = "first_name")
     private String firstName;
+    
+    @Column(name = "last_name")
     private String lastName;
 
     @OneToMany
     @JoinColumn(name = "master_id")
-    private Set<Automaton> automatonSet;
+    private Set<Automaton> automatons;
 }

@@ -4,6 +4,7 @@ import com.org.house.model.TransactionType;
 import com.org.house.transfer.NewTransaction;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionDTO {
     @Null(groups = {NewTransaction.class})
     private long id;

@@ -1,8 +1,9 @@
 package com.org.house.controller;
 
-import com.org.house.dto.MasterDTO;
+import com.org.house.dto.UserMasterDTO;
 import com.org.house.model.Master;
 import com.org.house.service.MasterService;
+import com.org.house.transfer.NewMaster;
 import com.org.house.transfer.UpdateMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,9 +17,15 @@ public class MasterController {
     @Autowired
     private MasterService masterService;
 
+
+    @PostMapping
+    public void addMaster(@Validated(NewMaster.class) @RequestBody UserMasterDTO userMasterDTO){
+        masterService.addMaster(userMasterDTO);
+    }
+
     @PatchMapping
-    public void updateMaster(@Validated(UpdateMaster.class) MasterDTO masterDTO) {
-        masterService.update(masterDTO);
+    public void updateMaster(@Validated(UpdateMaster.class) @RequestBody UserMasterDTO userMasterDTO) {
+        masterService.update(userMasterDTO);
     }
 
     @GetMapping("/{id}")

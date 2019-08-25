@@ -3,10 +3,12 @@ package com.org.house.dto;
 import com.org.house.model.Authority;
 import com.org.house.model.Master;
 import com.org.house.model.Owner;
+import com.org.house.model.UserType;
 import com.org.house.transfer.NewOwner;
 import com.org.house.transfer.UpdateOwner;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class OwnerDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserOwnerDTO {
     @Null(groups = NewOwner.class)
     @NotNull(groups = UpdateOwner.class)
     private long id;
@@ -23,8 +26,7 @@ public class OwnerDTO {
     @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
     private String email;
 
-    @Null(groups = NewOwner.class)
-    @NotNull(groups = UpdateOwner.class)
+    @NotNull(groups = {NewOwner.class, UpdateOwner.class})
     private long companyId;
 
     @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
@@ -33,11 +35,15 @@ public class OwnerDTO {
     @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
     private String password;
 
-    @Null(groups = {NewOwner.class,UpdateOwner.class})
-    private boolean isMaster;
+    @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
+    private String firstName;
 
-    @NotNull(groups = {NewOwner.class, UpdateOwner.class})
-    private boolean isOwner;
+    @NotBlank(groups = {NewOwner.class, UpdateOwner.class})
+    private String lastName;
+
+    @Null(groups = {NewOwner.class, UpdateOwner.class})
+    private UserType type;
+
 
     @Null(groups = NewOwner.class)
     @NotNull(groups = UpdateOwner.class)
@@ -54,7 +60,6 @@ public class OwnerDTO {
     @Null(groups = NewOwner.class)
     @NotNull(groups = UpdateOwner.class)
     private boolean isCredentialsNonExpired;
-
 
 
     private Set<Authority> authorities;

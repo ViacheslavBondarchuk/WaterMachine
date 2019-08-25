@@ -1,8 +1,10 @@
 package com.org.house.controller;
 
-import com.org.house.dto.OwnerDTO;
+import com.org.house.dto.UserOwnerDTO;
 import com.org.house.model.Owner;
 import com.org.house.service.OwnerService;
+import com.org.house.transfer.NewOwner;
+import com.org.house.transfer.UpdateMaster;
 import com.org.house.transfer.UpdateOwner;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,14 @@ public class OwnerController {
     @Autowired
     private OwnerService ownerService;
 
+    @PostMapping
+    public void addOwner(@Validated(NewOwner.class) @RequestBody UserOwnerDTO userOwnerDTO){
+        ownerService.addOwner(userOwnerDTO);
+    }
+
     @PatchMapping
-    public void updateOwner(@Validated(UpdateOwner.class) @RequestBody OwnerDTO ownerDTO) {
-        ownerService.updateOwner(ownerDTO);
+    public void updateOwner(@Validated(UpdateOwner.class) @RequestBody UserOwnerDTO userOwnerDTO) {
+        ownerService.updateOwner(userOwnerDTO);
     }
 
     @GetMapping

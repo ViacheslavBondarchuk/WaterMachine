@@ -1,6 +1,7 @@
 package com.org.house.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
@@ -20,11 +22,15 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "company_id")
     private long companyId;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
     @Column(unique = true, length = 50)
     private String username;
     private String password;
-    private boolean isMaster;
-    private boolean isOwner;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
     private boolean isEnabled;
     private boolean isAccountNonLocked;
     private boolean isAccountNonExpired;
